@@ -1,0 +1,17 @@
+{
+  "name": "sg1",
+  "rednet": "left",
+  "remoteMonitor": "m1",
+  "monitorSize": ["medium", "small"],
+  "storages": [
+    "ic2:mfsu_1",
+    "ic2:mfsu_2",
+    "ic2:mfsu_3",
+    "ic2:mfsu_4",
+    "ic2:mfsu_5",
+    "ic2:mfsu_6",
+    "ic2:mfsu_7",
+    "ic2:mfsu_8",
+    "ic2:mfsu_9",
+  ]
+}

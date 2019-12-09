@@ -1,0 +1,159 @@
+{
+  "dependencies": {
+    "FileLoader": ["JsonDecoder"],
+    "rendering/MonitorButton": ["rendering/MonitorLine", "rendering/RenderHelper"],
+    "rendering/MonitorFieldset": ["rendering/MonitorLine"],
+    "rendering/ChartItem": ["rendering/MonitorLine", "rendering/RenderHelper", "Utils"],
+    "generators/FluidGenerator": ["FluidTank"],
+    "FluidTank": ["Fluid"]
+  },
+  "packages": {
+    "manager": {
+      "library": [
+        "managerPlugins/ReactorPlugin",
+        "managerPlugins/EuStoragePlugin",
+        "RednetClient",
+        "Manager",
+        "Utils"
+      ],
+      "bin": ["manager"]
+    },
+    "monitor": {
+      "library": [
+        "Monitor",
+        "MonitorControl",
+        "RednetClient",
+        "listeners/MonitorTouchListener",
+        "FileLoader"
+      ],
+      "startup": "run-monitor",
+      "bin": ["run-event-listener"],
+      "config": ["monitor-config"]
+    },
+    "energyStorage": {
+      "library": [
+        "EnergyStorage",
+        "RemoteMonitor",
+        "StorageControl",
+        "rendering/ChartItem",
+        "rendering/MonitorFieldset",
+        "Utils",
+        "FileLoader"
+      ],
+      "startup": "run-energy-storage",
+      "config": ["energy-storage-config"]
+    },
+    "energyStorageGrid": {
+      "library": [
+        "EnergyStorage",
+        "FileLoader",
+        "RemoteMonitor",
+        "StorageGridControl",
+        "rendering/ChartItem",
+        "rendering/RenderHelper",
+        "rendering/MonitorFieldset"
+      ],
+      "startup": "run-energy-storage-grid",
+      "config": ["energy-storage-grid-config"]
+    },
+    "generatorGrid": {
+      "library": [
+        "rendering/ChartItem",
+        "rendering/MonitorFieldset"
+        "rendering/MonitorButton",
+        "generators/FluidGenerator",
+        "GeneratorGridControl",
+        "RemoteMonitor",
+        "Fluid",
+        "FileLoader",
+        "Utils"
+      ],
+      "startup": "run-generator-grid",
+      "config": ["generator-grid-config"]
+    },
+    "electroMeter": {
+      "library": [
+        "EnergyStorage",
+        "RemoteMonitor",
+        "ElectroMeter",
+        "RedstoneIntegrator",
+        "rendering/MonitorFieldset",
+        "Utils",
+        "FileLoader"
+      ],
+      "startup": "run-electro-meter",
+      "config": ["electro-meter-config"]
+    },
+    "fluidTank": {
+      "library": [
+        "Fluid",
+        "FluidTank",
+        "RemoteMonitor",
+        "FluidTankControl",
+        "rendering/ChartItem",
+        "rendering/MonitorLine",
+        "rendering/MonitorFieldset",
+        "rendering/RenderHelper",
+        "Utils",
+        "FileLoader"
+      ],
+      "startup": "run-fluid-tank",
+      "config": ["fluid-tank-config"]
+    },
+    "nuclearReactor": {
+      "library": [
+        "FuelRod",
+        "RemoteMonitor",
+        "Monitor",
+        "RednetClient",
+        "FluidTank",
+        "Reactor",
+        "ReactorControl",
+        "RedstoneIntegrator",
+        "Utils",
+        "handlers/CommandHandler",
+        "listeners/CommandListener",
+        "FileLoader"
+      ],
+      "bin": ["terminate-reactor", "run-command-listener"],
+      "startup": "run-reactor",
+      "config": ["reactor-config"]
+    },
+    "turbine": {
+      "library": [
+        "rendering/ChartItem",
+        "rendering/MonitorFieldset",
+        "rendering/MonitorButton",
+        "RemoteMonitor",
+        "FluidTank",
+        "Fluid",
+        "RednetClient",
+        "Generator",
+        "TurbineControl",
+        "Utils",
+        "FileLoader"
+      ],
+      "startup": "run-turbine",
+      "config": ["turbine-config"]
+    },
+    "reactorMonitor": {
+      "library": [
+        "handlers/CommandHandler",
+        "listeners/CommandListener",
+        "rendering/ChartItem",
+        "rendering/MonitorButton",
+        "rendering/MonitorFieldset",
+        "rendering/RenderHelper",
+        "RemoteMonitor",
+        "RednetClient",
+        "Fluid",
+        "FileLoader",
+        "ReactorMonitor",
+        "Utils",
+      ],
+      "bin": ["run-command-listener"],
+      "startup": "run-reactor-monitor",
+      "config": ["reactor-monitor-config"]
+    }
+  }
+}

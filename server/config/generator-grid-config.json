@@ -1,0 +1,10 @@
+{
+  "name": "gg1",
+  "rednet": "right",
+  "remoteMonitor": "m1",
+  "fuel": "minecraft:lava",
+  "monitorSize": ["medium", "small"],
+  "generators": [
+    "ic2:geo_generator_0",
+  ]
+}

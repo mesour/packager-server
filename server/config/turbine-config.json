@@ -1,0 +1,9 @@
+{
+  "name": "lg1",
+  "rednet": "left",
+  "remoteMonitor": "m2",
+  "generator1": "ic2:kinetic_generator_2",
+  "generator2": "ic2:kinetic_generator_3",
+  "heatExchanger": "ic2:liquid_heat_exchanger_0",
+  "steamGenerator": "ic2:steam_generator_1",
+}

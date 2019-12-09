@@ -1,0 +1,6 @@
+{
+  "name": "ft1",
+  "rednet": "left",
+  "remoteMonitor": "m1",
+  "tank": "ic2:iridium_tank_1"
+}

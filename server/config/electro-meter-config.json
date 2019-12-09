@@ -1,0 +1,9 @@
+{
+  "name": "em1",
+  "rednet": "left",
+  "remoteMonitor": "m1",
+  "mfsu": "ic2:mfsu_0",
+  "inputIntegrator": ["redstone_integrator_1", "west"],
+  "outputIntegrator": ["redstone_integrator_2", "north"],
+  "autoMode": true
+}

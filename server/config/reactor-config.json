@@ -1,0 +1,7 @@
+{
+  "name": "r1",
+  "rednet": "left",
+  "remoteMonitor": "m1",
+  "reactor": "ic2:reactor_chamber_0",
+  "integrator": ["redstone_integrator_0", "south"]
+}
