@@ -3,16 +3,22 @@
 ## Server installation
 
 ```
-wget https://raw.githubusercontent.com/mesour/packager-server/master/instalation/packager-installer.lua
+wget https://raw.githubusercontent.com/mesour/packager-server/master/installation/packager-installer.lua
 ```
 
 and run
 
 ```
-packager-installer
+packager-installer <REPOSITORY> <OAUTH_TOKEN>
 ```
 
 _For update use same command._
+
+Example:
+
+```
+packager-installer mesour/packager-server <OAUTH_TOKEN>
+```
 
 
 ## Local installation
