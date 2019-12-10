@@ -15,6 +15,8 @@ function PackagerServer:create(name, configFile, rednetClient)
 end
 
 function PackagerServer:run()
+  print("Packager server name: " .. self.name)
+
   while true
   do
     id,message = self.rednetClient:receive(self.name, "update")

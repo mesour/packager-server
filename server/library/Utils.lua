@@ -23,7 +23,7 @@ function Utils.getTableCount(t)
   return count
 end
 
-function Utils.findSide(name, prior)
+function Utils.findPeripheralSide(name, prior)
   local sides = {"top";"front";"left";"right";"back";"bottom"}
 
   if prior==nil then

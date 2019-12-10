@@ -141,7 +141,7 @@ function Packager:create(configFile)
   obj.config = decodeFromFile(configFile)
   obj.server = "packager0"
   obj.waiting = false
-	obj.updateUrl = "https://gist.githubusercontent.com/mesour/7b93f1a8672b3c6c4226cf4962f36d22/raw"
+  obj.updateUrl = "https://raw.githubusercontent.com/mesour/packager-server/master/packager/packager.lua"
 
   return obj
 end
@@ -182,7 +182,7 @@ function Packager:selfUpgrade()
 
 	fs.delete("packager.lua")
 
-	shell.run("wget " .. self.updateUrl .. " packager.lua")
+	shell.run("wget " .. self.updateUrl)
 
 	print("")
 	print("Packager sucessfully upgraded")
@@ -190,6 +190,9 @@ end
 
 function Packager:run()
   local side = self.findSide("modem")
+  if side == "none" then
+    error("Can not find Wireless modem")
+  end
 
   rednet.open(side)
   local id = self.random(6)
