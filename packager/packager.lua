@@ -1,4 +1,3 @@
------------------------------------------------------------------- utils
 local controls = {["\n"]="\\n", ["\r"]="\\r", ["\t"]="\\t", ["\b"]="\\b", ["\f"]="\\f", ["\""]="\\\"", ["\\"]="\\\\"}
 
 local whites = {['\n']=true; ['\r']=true; ['\t']=true; [' ']=true; [',']=true; [':']=true}
@@ -125,9 +124,6 @@ function decodeFromFile(path)
 	file.close()
 	return decoded
 end
-
------------------------------------------------------------------- / utils
-
 local args = {...}
 
 Packager = {}
