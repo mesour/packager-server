@@ -2,7 +2,7 @@
 
 ## Usable packages
 
-- `electroMeter` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/electroMeter.md)
+- `electroMeter` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/energyMeter.md)
 - `energyStorage`
 - `energyStorageGrid` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/energyStorageGrid.md)
 - `fluidTank` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/fluidTank.md)
