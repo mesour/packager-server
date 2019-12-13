@@ -184,6 +184,14 @@ function Packager:selfUpgrade()
 	print("Packager sucessfully upgraded")
 end
 
+function Packager:init(packageName)
+    local h = fs.open("packager.json", "w")
+    h.write("{\n\t\"required\": {\n\t\t\"" .. packageName .. "\": \"*\"\n\t}\n}")
+    h.close();
+
+    print("Package " .. packageName .. " is successfully initialized. You can run `packager`.")
+end
+
 function Packager:run()
   local side = self.findSide("modem")
   if side == "none" then
@@ -232,8 +240,13 @@ local packager = Packager:create("packager.json")
 
 if args[1] == nil then
 	packager:run()
+elseif args[1] == "init" then
+    if args[2] == nil then
+        error("Second parameter: package name is required")
+    end
+	packager:init(args[2])
 elseif args[1] == "self-upgrade" then
 	packager:selfUpgrade()
 else
-	error("Unknown signal " .. args[1])
+	error("Unknown signal: " .. args[1])
 end

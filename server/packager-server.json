@@ -5,6 +5,7 @@
     "rendering/MonitorFieldset": ["rendering/MonitorLine"],
     "rendering/ChartItem": ["rendering/MonitorLine", "rendering/RenderHelper", "Utils"],
     "generators/FluidGenerator": ["FluidTank"],
+    "turtle/Turtle": ["turtle/TurtleFuel", "turtle/TurtleInventory", "turtle/TurtleMover", "turtle/TurtleHelper", "turtle/TurtleLogger"],
     "FluidTank": ["Fluid"]
   },
   "packages": {
@@ -59,7 +60,7 @@
     "generatorGrid": {
       "library": [
         "rendering/ChartItem",
-        "rendering/MonitorFieldset"
+        "rendering/MonitorFieldset",
         "rendering/MonitorButton",
         "generators/FluidGenerator",
         "GeneratorGridControl",
@@ -136,6 +137,16 @@
       "startup": "run-turbine",
       "config": ["turbine-config"]
     },
+    "turtle": {
+      "library": [
+        "turtle/Turtle",
+        "FileLoader",
+        "Utils"
+      ],
+      "bin": ["run-turtle"],
+      "startup": "run-turtle",
+      "mainConfig": "turtle-config"
+    },
     "reactorMonitor": {
       "library": [
         "handlers/CommandHandler",
@@ -149,7 +160,7 @@
         "Fluid",
         "FileLoader",
         "ReactorMonitor",
-        "Utils",
+        "Utils"
       ],
       "bin": ["run-command-listener"],
       "startup": "run-reactor-monitor",

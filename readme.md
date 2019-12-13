@@ -1,38 +1,32 @@
 # Packager
 
-## Server installation
+## Usable packages
 
-```
-wget https://raw.githubusercontent.com/mesour/packager-server/master/installation/packager-installer.lua
-```
+- `electroMeter`
+- `energyStorage`
+- `energyStorageGrid`
+- `fluidTank` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/fluidTank.md)
+- `generatorGrid`
+- `manager`
+- `monitor`
+- `nuclearReactor`
+- `reactorMonitor`
+- `turbine`
+- `turtle` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turtle.md)
 
-and run
-
-```
-packager-installer <REPOSITORY> <OAUTH_TOKEN>
-```
-
-_For update use same command._
-
-Example:
-
-```
-packager-installer mesour/packager-server <OAUTH_TOKEN>
-```
-
-
-## Local installation
+## Client installation
 
 ```
 wget https://raw.githubusercontent.com/mesour/packager-server/master/packager/packager.lua
 ```
 
-Sample `packager.json` file:
-```
-wget https://raw.githubusercontent.com/mesour/packager-server/master/packager/packager.json
-```
-
 ## Usage
+
+Init `packager.json` file, for example for package`reactorMonitor`.
+It will create configuration file `packager.json` with required package.
+```
+pakcager init reactorMonitor
+```
 
 For download latest file for your project from packager server run this command:
 ```
@@ -44,9 +38,39 @@ For upgrade to the latest version use this command:
 packager self-upgrade
 ```
 
-## Configuration
+### Client configuration
 
-## Server configration
+In this example is required `monitor` package.
+
+```
+{
+  "required": {
+    "monitor": "*"
+  }
+}
+```
+
+## Server installation
+
+Download latest installer with:
+
+```
+wget https://raw.githubusercontent.com/mesour/packager-server/master/installation/packager-installer.lua
+```
+
+Replace `<REPOSITORY>` to your `user/repository` from you Github URL and run _(for update use same command.)_:
+
+```
+packager-installer <REPOSITORY> <OAUTH_TOKEN>
+```
+
+Example with `mesour/packager-server` repository:
+
+```
+packager-installer mesour/packager-server <OAUTH_TOKEN>
+```
+
+### Server configration
 
 Default "packager-server.json" for configurate monigor package:
 ```
@@ -67,25 +91,3 @@ Default "packager-server.json" for configurate monigor package:
   ...
 }
 ```
-
-## Client configuration
-```
-{
-  "required": {
-    "monitor": "*"
-  }
-}
-```
-
-## Usable packages
-
-- `manager`
-- `monitor`
-- `energyStorage`
-- `energyStorageGrid`
-- `generatorGrid`
-- `electroMeter`
-- `fluidTank`
-- `nuclearReactor`
-- `turbine`
-- `reactorMonitor`
