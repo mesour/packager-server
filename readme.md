@@ -10,8 +10,8 @@ Any contribution is welcome, be that using the mod, reporting bugs or contributi
 
 ### Donate
 
-We will be more and more motivated if you contribute to the development of new features and
-current features improvements.
+If you contribute to the development, we will be more motivated to develop
+new features and improve existing features.
 
 [![Donate button](docs/img/donate.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GSDRZW9YGPE5G&source=url)
 
