@@ -342,7 +342,6 @@ function FileComposer.decompress(archive, rewrite, verbose, folder)
     end
 end
 
-return FileComposer
 PackagerInstaller = {}
 PackagerInstaller.__index = PackagerInstaller
 

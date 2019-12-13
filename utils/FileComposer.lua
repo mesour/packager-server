@@ -58,5 +58,3 @@ function FileComposer.decompress(archive, rewrite, verbose, folder)
         print("\n\nSuccessfully extracted")
     end
 end
-
-return FileComposer
