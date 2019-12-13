@@ -390,9 +390,24 @@ function PackagerInstaller:getUrl(tag)
     return self.serverUrl .. self.repository .. "/" .. self.tag .. self.path
 end
 
+function PackagerInstaller.selfUpgrade()
+    print("Downloading latest version...")
+    print("")
+
+    fs.delete("packager-installer.lua")
+
+    local updateUrl = "https://raw.githubusercontent.com/mesour/packager-server/master/generated/packager-installer.lua"
+    shell.run("wget " .. updateUrl)
+
+    print("")
+    print("Packager server sucessfully upgraded")
+end
+
 if args[1] == nil then
     error("First parameter repository is required")
+elseif args[1] == "self-upgrade" then
+    PackagerInstaller.selfUpgrade()
 else
-    local installer = PackagerDevInstaller:create(args[1], args[2])
+    local installer = PackagerInstaller:create(args[1], args[2])
     installer:install()
 end

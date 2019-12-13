@@ -208,6 +208,19 @@ function PackagerDevInstaller:install()
   end
 end
 
+function PackagerDevInstaller.selfUpgrade()
+    print("Downloading latest version...")
+    print("")
+
+    fs.delete("packager-dev.lua")
+
+    local updateUrl = "https://raw.githubusercontent.com/mesour/packager-server/master/generated/packager-dev.lua"
+    shell.run("wget " .. updateUrl)
+
+    print("")
+    print("Packager server sucessfully upgraded")
+end
+
 function PackagerDevInstaller:walkFilesRecursive(data, dir)
   dir = dir or ""
 
@@ -241,6 +254,8 @@ end
 
 if args[1] == nil or args[2] == nil then
   error("First and second parameter is required")
+elseif args[1] == "self-upgrade" then
+    PackagerDevInstaller.selfUpgrade()
 else
   local installer = PackagerDevInstaller:create(args[1], args[2])
   installer:install()
