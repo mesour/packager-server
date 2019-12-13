@@ -2,16 +2,16 @@
 
 ## Usable packages
 
-- `electroMeter`
+- `electroMeter` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/electroMeter.md)
 - `energyStorage`
-- `energyStorageGrid`
+- `energyStorageGrid` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/energyStorageGrid.md)
 - `fluidTank` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/fluidTank.md)
 - `generatorGrid` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/generatorGrid.md)
 - `manager`
 - `monitor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/monitor.md)
-- `nuclearReactor`
-- `reactorMonitor`
-- `turbine`
+- `nuclearReactor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/reactor.md)
+- `reactorMonitor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/reactorMonitor.md)
+- `turbine` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turbine.md)
 - `turtle` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turtle.md)
 
 ## Client installation

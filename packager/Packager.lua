@@ -8,7 +8,7 @@ function Packager:create(configFile)
   setmetatable(obj, self)
 
   obj.name = name
-  obj.config = decodeFromFile(configFile)
+  obj.configFile = configFile
   obj.server = "packager0"
   obj.waiting = false
   obj.updateUrl = "https://raw.githubusercontent.com/mesour/packager-server/master/generated/packager.lua"
@@ -74,7 +74,7 @@ function Packager:run()
 
   rednet.open(side)
   local id = self.random(6)
-  local data = decodeFromFile(configFile)
+  local data = decodeFromFile(self.configFile)
 
   while true
   do
