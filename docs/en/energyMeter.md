@@ -2,9 +2,9 @@
 
 Automatic program for display how much EU went through the energy cable.
 
-![Energy meter monitor](https://github.com/mesour/packager-server/blob/master/docs/img/energyMeter_monitor.png)
+![Energy meter monitor](../img/energyMeter_monitor.png)
 
-![Energy meter](https://github.com/mesour/packager-server/blob/master/docs/img/energyMeter.png)
+![Energy meter](../img/energyMeter.png)
 
 ## Requirements
 

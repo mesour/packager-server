@@ -9,9 +9,9 @@ but maximum can be 6 fuel rods and must be placed on specified places like on im
 - Program will automatically stop reactor if heat is too much
 - Program will automatically stop fluid reactor if cold coolant is too low amount or hot coolant is too much amount
 
-![Reactor with monitor](https://github.com/mesour/packager-server/blob/master/docs/img/reactor.png)
+![Reactor with monitor](../img/reactor.png)
 
-![Reactor inside](https://github.com/mesour/packager-server/blob/master/docs/img/reactor_inside.png)
+![Reactor inside](../img/reactor_inside.png)
 
 ## Requirements
 

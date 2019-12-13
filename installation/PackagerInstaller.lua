@@ -43,6 +43,18 @@ function PackagerInstaller:getArchiveContent()
   return false
 end
 
+function PackagerInstaller:makeRequest(url)
+  local response = http.get(url)
+  if response ~= nil then
+    if response.getResponseCode() == 200 then
+        return response
+    else
+        error("Response code: " .. response.getResponseCode().toString() .. response.readAll())
+    end
+  end
+  return false
+end
+
 function PackagerInstaller:getUrl(tag)
     return self.serverUrl .. self.repository .. "/" .. self.tag .. self.path
 end

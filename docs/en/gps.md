@@ -21,7 +21,7 @@ identify its height or its X position. You must have computers on different loca
 My recommendation is to use the below configuration I use it all the time ant it is very
 accurate affective and compact.
 
-![GPS Cluster image](https://github.com/mesour/packager-server/blob/master/docs/img/gps.jpg)
+![GPS Cluster image](../img/gps.jpg)
 
 After setting up four computers in this pattern at the top of the world.Set up a startup
 file on each computer with the continence as the picture shown.

@@ -2,9 +2,9 @@
 
 Automatic program for display tank capacity and current content.
 
-![Fluid tank monitor](https://github.com/mesour/packager-server/blob/master/docs/img/fluidTank_monitor.png)
+![Fluid tank monitor](../img/fluidTank_monitor.png)
 
-![Fluid tank](https://github.com/mesour/packager-server/blob/master/docs/img/fluidTank.png)
+![Fluid tank](../img/fluidTank.png)
 
 ## Requirements
 

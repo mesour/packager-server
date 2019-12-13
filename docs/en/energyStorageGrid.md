@@ -2,9 +2,9 @@
 
 Automatic program for display data from IC2 energy storages.
 
-![Energy storage grid monitor](https://github.com/mesour/packager-server/blob/master/docs/img/energyStorageGrid_monitor.png)
+![Energy storage grid monitor](../img/energyStorageGrid_monitor.png)
 
-![Energy storage grid](https://github.com/mesour/packager-server/blob/master/docs/img/energyStorageGrid.png)
+![Energy storage grid](../img/energyStorageGrid.png)
 
 ## Requirements
 

@@ -2,9 +2,9 @@
 
 Automatic program for display data from Geothermal or SemiFluid generator.
 
-![Generator grid monitor](https://github.com/mesour/packager-server/blob/master/docs/img/generatorGrid_monitor.png)
+![Generator grid monitor](../img/generatorGrid_monitor.png)
 
-![Generator grid](https://github.com/mesour/packager-server/blob/master/docs/img/generatorGrid.png)
+![Generator grid](../img/generatorGrid.png)
 
 ## Requirements
 

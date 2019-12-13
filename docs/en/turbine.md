@@ -2,13 +2,13 @@
 
 Automatic program for use HeatExchanger to generate energy.
 
-![Turbine monitor](https://github.com/mesour/packager-server/blob/master/docs/img/turbine_monitor.png)
+![Turbine monitor](../img/turbine_monitor.png)
 
-![Turbine](https://github.com/mesour/packager-server/blob/master/docs/img/turbine.png)
+![Turbine](../img/turbine.png)
 
-![Turbine 2](https://github.com/mesour/packager-server/blob/master/docs/img/turbine_1.png)
+![Turbine 2](../img/turbine_1.png)
 
-![Turbine 1](https://github.com/mesour/packager-server/blob/master/docs/img/turbine_2.png)
+![Turbine 1](../img/turbine_2.png)
 
 ![Turbine boiler](../img/turbine_boiler.png)
 
@@ -29,7 +29,6 @@ Automatic program for use HeatExchanger to generate energy.
 
 1. IndustrialCraft 2 (IC2)
 2. Computercraft (CC:Tweaked)
-3. Plethora
 
 Tested on Minecraft 1.12.2
 

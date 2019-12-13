@@ -2,7 +2,7 @@
 
 Input for monitor is via Wireless. It is used for many programs output.
 
-![Monitor](https://github.com/mesour/packager-server/blob/master/docs/img/monitor.png)
+![Monitor](../img/monitor.png)
 
 ## Requirements
 
