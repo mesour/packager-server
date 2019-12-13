@@ -1,5 +1,20 @@
 # Packager
 
+Example monitor (for fluid reactor):
+![Donate button](docs/img/reactorMonitor_monitor.png)
+
+## Contributing
+Any contribution is welcome, be that using the mod, reporting bugs or contributing code.
+
+- Bug reporting: [here](https://github.com/mesour/packager-server/issues)
+
+### Donate
+
+We will be more and more motivated if you contribute to the development of new features and
+current features improvements.
+
+[![Donate button](docs/img/donate.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GSDRZW9YGPE5G&source=url)
+
 ## Usable packages
 
 - `electroMeter` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/energyMeter.md)
@@ -73,26 +88,4 @@ Example with `mesour/packager-server` repository:
 
 ```
 packager-installer mesour/packager-server
-```
-
-### Server configration
-
-Default "packager-server.json" for configurate monigor package:
-```
-{
-  "monitor": {
-    "library": [
-      "Monitor",
-      "MonitorControl",
-      "RednetClient",
-      "listeners/MonitorTouchListener",
-      "FileLoader"
-    ],
-    "startup": "run-monitor",
-    "bin": ["run-event-listener"],
-    "config": ["monitor-config"]
-  },
-
-  ...
-}
 ```
