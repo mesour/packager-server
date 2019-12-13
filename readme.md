@@ -1,11 +1,28 @@
-# Packager
+# Packager server for Minecraft
+
+## Requirements
+
+- `Computercraft (CC:Tweaked)`
+- `IndustrialCraft 2 (IC2)` or `Plethora` for some packages if you want it
+
+Tested on Minecraft 1.12.2
+
+## Features
+
+- It allow you to install packager server
+- Scripts on server can be updated online from Github repository (this or your own)
+- **Everything can be managed by simple using commands and edit configuration files**
+- Server is running in game and other computers with wireless connection can connect and download package that needed
+- After download you only configure it and hold `ctrl + R`. It is everything :D
+- This repository contains server with more packages for monitor and control IndustrialCraft machines _(for now)_
 
 Example monitor (for fluid reactor):
-![Donate button](docs/img/reactorMonitor_monitor.png)
+![Reactor monitor example](docs/img/reactorMonitor_monitor.png)
 
 ## Contributing
 Any contribution is welcome, be that using the mod, reporting bugs or contributing code.
 
+- If you create Pull request, before it run: `./bin/build.sh` and commit changes.
 - Bug reporting: [here](https://github.com/mesour/packager-server/issues)
 
 ### Donate
