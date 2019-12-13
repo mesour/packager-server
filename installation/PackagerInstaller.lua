@@ -25,6 +25,8 @@ function PackagerInstaller:install()
     print("\nComplete downloading files")
 
     FileComposer.decompress(sourcePath, true, true)
+
+    fs.delete(sourcePath)
   else
     error("Error response from Github")
   end

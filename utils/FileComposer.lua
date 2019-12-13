@@ -38,7 +38,7 @@ function FileComposer.decompress(archive, rewrite, verbose, folder)
     while true do
         local file = h.readLine()
         local content = h.readLine()
-        if not line or line == "" or not content or content == "" then break end
+        if not file or file == "" or not content or content == "" then break end
 
         local path = folder .. "/" .. file
         if rewrite == false and fs.exists(path) then
