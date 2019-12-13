@@ -47,15 +47,15 @@ function Packager.findSide(name, prior)
 end
 
 function Packager:selfUpgrade()
-	print("Downloading latest version...")
-	print("")
+    print("Downloading latest version...")
+    print("")
 
-	fs.delete("packager.lua")
+    fs.delete("packager.lua")
 
-	shell.run("wget " .. self.updateUrl)
+    shell.run("wget " .. self.updateUrl)
 
-	print("")
-	print("Packager sucessfully upgraded")
+    print("")
+    print("Packager sucessfully upgraded")
 end
 
 function Packager:init(packageName)
@@ -85,16 +85,16 @@ function Packager:run()
 
       self.waiting = true
     else
-			a,message = rednet.receive(id .. "-send")
+            a,message = rednet.receive(id .. "-send")
 
-			print("Installing files...")
-			print("")
+            print("Installing files...")
+            print("")
 
-			self:writeFiles(textutils.unserialize(message))
+            self:writeFiles(textutils.unserialize(message))
 
-			print("")
-			print("Packages are sucessfully installed")
-			break
+            print("")
+            print("Packages are sucessfully installed")
+            break
     end
   end
 
@@ -102,25 +102,25 @@ function Packager:run()
 end
 
 function Packager:writeFiles(libraries)
-	for key,value in pairs(libraries) do
-		print("  - " .. value["location"])
-		local h = fs.open(value["location"], "w")
-		h.write(value["content"])
-		h.close()
-	end
+    for key,value in pairs(libraries) do
+        print("  - " .. value["location"])
+        local h = fs.open(value["location"], "w")
+        h.write(value["content"])
+        h.close()
+    end
 end
 
 local packager = Packager:create("packager.json")
 
 if args[1] == nil then
-	packager:run()
+    packager:run()
 elseif args[1] == "init" then
     if args[2] == nil then
         error("Second parameter: package name is required")
     end
-	packager:init(args[2])
+    packager:init(args[2])
 elseif args[1] == "self-upgrade" then
-	packager:selfUpgrade()
+    packager:selfUpgrade()
 else
-	error("Unknown signal: " .. args[1])
+    error("Unknown signal: " .. args[1])
 end
