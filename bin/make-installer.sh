@@ -1,1 +1,6 @@
-cat ../installation/prepend.lua ../server/library/JsonDecoder.lua ../utils/GithubClient.lua ../installation/PackagerInstaller.lua >> ../installation/packager-installer.lua
+#!/bin/bash
+cd "$(dirname "$0")"
+
+output=../generated/packager-installer.lua
+rm ${output}
+cat ../installation/prepend.lua ../server/library/Utils.lua ../utils/base64.lua ../utils/FileComposer.lua ../installation/PackagerInstaller.lua >> ${output}

@@ -185,10 +185,10 @@ function GithubClient:createHeaders()
     [ "Authorization" ] = "token " .. self.token
   }
 end
-PackagerInstaller = {}
-PackagerInstaller.__index = PackagerInstaller
+PackagerDevInstaller = {}
+PackagerDevInstaller.__index = PackagerDevInstaller
 
-function PackagerInstaller:create(repository, token)
+function PackagerDevInstaller:create(repository, token)
   local obj = {}
   setmetatable(obj, self)
 
@@ -197,7 +197,7 @@ function PackagerInstaller:create(repository, token)
   return obj
 end
 
-function PackagerInstaller:install()
+function PackagerDevInstaller:install()
   print("Start downloading files")
   local directoryData = self.githubClient:getContents(self.serverDirectory)
   if directoryData ~= false then
@@ -208,7 +208,7 @@ function PackagerInstaller:install()
   end
 end
 
-function PackagerInstaller:walkFilesRecursive(data, dir)
+function PackagerDevInstaller:walkFilesRecursive(data, dir)
   dir = dir or ""
 
   if GithubClient.isArrayOfItems(data) then
@@ -242,6 +242,6 @@ end
 if args[1] == nil or args[2] == nil then
   error("First and second parameter is required")
 else
-  local installer = PackagerInstaller:create(args[1], args[2])
+  local installer = PackagerDevInstaller:create(args[1], args[2])
   installer:install()
 end

@@ -1,60 +1,55 @@
 PackagerInstaller = {}
 PackagerInstaller.__index = PackagerInstaller
 
-function PackagerInstaller:create(repository, token)
+function PackagerInstaller:create(repository, tag)
   local obj = {}
   setmetatable(obj, self)
 
-  obj.githubClient = GithubClient:create(repository, token)
-  obj.serverDirectory = "server"
+  obj.repository = repository
+  obj.tag = tag or "master"
+  obj.serverUrl = "https://raw.githubusercontent.com/"
+  obj.path = "/generated/packager-server.compressed"
+
   return obj
 end
 
 function PackagerInstaller:install()
   print("Start downloading files")
-  local directoryData = self.githubClient:getContents(self.serverDirectory)
-  if directoryData ~= false then
-    self:walkFilesRecursive(directoryData)
+  local data = self:getArchiveContent()
+  local sourcePath = "source.compressed"
+  if data ~= false then
+    local h = fs.open(sourcePath, "w")
+    h.write(data)
+    h.close()
+
     print("\nComplete downloading files")
+
+    FileComposer.decompress(sourcePath, true, true)
   else
     error("Error response from Github")
   end
 end
 
-function PackagerInstaller:walkFilesRecursive(data, dir)
-  dir = dir or ""
+function PackagerInstaller:getArchiveContent()
+  path = path or ""
+  local url = self.serverUrl .. self.repository .. "/" .. self.tag .. self.path
 
-  if GithubClient.isArrayOfItems(data) then
-    for key,item in pairs(data) do
-      self:walkFilesRecursive(item, dir)
-    end
-  else
-    local directory = dir .. "/" .. data["name"]
-
-    if data["type"] == "dir" then
-      local contents = self.githubClient:getContents(data["path"])
-      if contents ~= false then
-
-        print("\nWalk directory: " .. data["path"])
-        self:walkFilesRecursive(contents, directory)
-      else
-        error("Error response from Github")
-      end
-    else
-      local content = self.githubClient:getFileContent(data)
-      if content then
-        write(".")
-        local h = fs.open(directory, "w")
-        h.write(content)
-        h.close()
-      end
-    end
+  local response = self:makeRequest(url)
+  if response then
+    local data = response.readAll()
+    response.close()
+    return data
   end
+  return false
 end
 
-if args[1] == nil or args[2] == nil then
-  error("First and second parameter is required")
+function PackagerInstaller:getUrl(tag)
+    return self.serverUrl .. self.repository .. "/" .. self.tag .. self.path
+end
+
+if args[1] == nil then
+    error("First parameter repository is required")
 else
-  local installer = PackagerInstaller:create(args[1], args[2])
-  installer:install()
+    local installer = PackagerDevInstaller:create(args[1], args[2])
+    installer:install()
 end

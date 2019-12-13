@@ -6,9 +6,9 @@
 - `energyStorage`
 - `energyStorageGrid`
 - `fluidTank` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/fluidTank.md)
-- `generatorGrid`
+- `generatorGrid` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/generatorGrid.md)
 - `manager`
-- `monitor`
+- `monitor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/monitor.md)
 - `nuclearReactor`
 - `reactorMonitor`
 - `turbine`
@@ -17,7 +17,7 @@
 ## Client installation
 
 ```
-wget https://raw.githubusercontent.com/mesour/packager-server/master/packager/packager.lua
+wget https://raw.githubusercontent.com/mesour/packager-server/master/generated/packager.lua
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ wget https://raw.githubusercontent.com/mesour/packager-server/master/packager/pa
 Init `packager.json` file, for example for package`reactorMonitor`.
 It will create configuration file `packager.json` with required package.
 ```
-pakcager init reactorMonitor
+packager init reactorMonitor
 ```
 
 For download latest file for your project from packager server run this command:
@@ -55,19 +55,19 @@ In this example is required `monitor` package.
 Download latest installer with:
 
 ```
-wget https://raw.githubusercontent.com/mesour/packager-server/master/installation/packager-installer.lua
+wget https://raw.githubusercontent.com/mesour/packager-server/master/generated/packager-installer.lua
 ```
 
 Replace `<REPOSITORY>` to your `user/repository` from you Github URL and run _(for update use same command.)_:
 
 ```
-packager-installer <REPOSITORY> <OAUTH_TOKEN>
+packager-installer <REPOSITORY>
 ```
 
 Example with `mesour/packager-server` repository:
 
 ```
-packager-installer mesour/packager-server <OAUTH_TOKEN>
+packager-installer mesour/packager-server
 ```
 
 ### Server configration

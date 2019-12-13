@@ -4,7 +4,11 @@ Automatic turtle program for Computercraft 1.6+
 
 ## Requirements
 
-1. Need created [GPS Cluster](https://github.com/mesour/packager-server/blob/master/docs/en/gps.md)
+1. IndustrialCraft 2 (IC2)
+2. Computercraft (CC:Tweaked)
+3. Need created [GPS Cluster](https://github.com/mesour/packager-server/blob/master/docs/en/gps.md) in game
+
+Tested on Minecraft 1.12.2
 
 ## Installation
 
@@ -15,8 +19,8 @@ Automatic turtle program for Computercraft 1.6+
 
 ## Configuration
 
-1. All configurations are **required**.
-2. Start position must always be at the bottom left of the cube.
+- All configurations are **required**.
+- Start position must always be at the bottom left of the cube.
 
 ```
 {

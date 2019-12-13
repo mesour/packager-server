@@ -54,18 +54,18 @@ function GeneratorGridControl:run()
         about = 0
       end
 
-
       local tank = generator:getTank()
 
       local fluid = generator:getFluid()
       local amount = tank and tank:getAmount() or 0
       local capacity = tank and tank:getCapacity(1, 8000) or 8000
-      local active = generator:getOfferedEnergy() > 0.0
 
       allCapacity = allCapacity + capacity
       allAmount = allAmount + amount
       allOfferedEnergy = allOfferedEnergy + generator:getOfferedEnergy()
       maxOfferedEnergy = maxOfferedEnergy + fluid["energy"]
+
+      local active = allOfferedEnergy > 0.0
 
       if active and 5 < key then
         someActive = true

@@ -1,1 +1,6 @@
-cat ../server/library/JsonDecoder.lua ../packager/PackagerSource.lua >> ../packager/packager.lua
+#!/bin/bash
+cd "$(dirname "$0")"
+
+output=../generated/packager.lua
+rm ${output}
+cat ../server/library/JsonDecoder.lua ../packager/Packager.lua >> ${output}

@@ -1,29 +1,30 @@
 # Fluid tank
 
-Automatic turtle program for display tank capacity and current content.
-
-![Fluid tank](https://github.com/mesour/packager-server/blob/master/docs/img/fluidTank.png)
+Automatic program for display tank capacity and current content.
 
 ![Fluid tank monitor](https://github.com/mesour/packager-server/blob/master/docs/img/fluidTank_monitor.png)
+
+![Fluid tank](https://github.com/mesour/packager-server/blob/master/docs/img/fluidTank.png)
 
 ## Requirements
 
 1. IndustrialCraft 2 (IC2)
-2. Computercraft
+2. Computercraft (CC:Tweaked)
 
-Tested on Minecraft 1.12.2.
+Tested on Minecraft 1.12.2
 
 ## Installation
 
-1. Install package `turtle`
+1. Install package `fluidTank`
 2. Run `mv fluid-tank-config.json config.json` to move config
 3. Run `edit config.json` and save your current configuration
 4. Restart computer (`ctrl + R`)
 
 ## Configuration
 
-1. All configurations are **required**.
-2. Start position must always be at the front bottom left of the cube.
+- All configurations are **required**.
+- `remoteMonitor` is name for [remote monitor](https://github.com/mesour/packager-server/blob/master/docs/en/monitor.md)
+- `tank` is name of connected peripheral
 
 ```
 {

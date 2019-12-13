@@ -137,7 +137,7 @@ function Packager:create(configFile)
   obj.config = decodeFromFile(configFile)
   obj.server = "packager0"
   obj.waiting = false
-  obj.updateUrl = "https://raw.githubusercontent.com/mesour/packager-server/master/packager/packager.lua"
+  obj.updateUrl = "https://raw.githubusercontent.com/mesour/packager-server/master/generated/packager.lua"
 
   return obj
 end
@@ -200,11 +200,11 @@ function Packager:run()
 
   rednet.open(side)
   local id = self.random(6)
+  local data = decodeFromFile(configFile)
 
   while true
   do
     if self.waiting == false then
-      local data = self.config
       data["id"] = id
 
       rednet.broadcast(textutils.serialize(data), self.server .. "-update")
