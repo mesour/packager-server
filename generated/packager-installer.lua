@@ -148,7 +148,6 @@ function Utils.printOnOff(monitor, value)
   monitor:write(input, color)
 end
 
-return Utils
 local base64 = {}
 
 local extract = _G.bit32 and _G.bit32.extract
