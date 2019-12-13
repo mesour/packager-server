@@ -19,7 +19,7 @@ function FileComposer.compress(outputFile, files)
     local h = fs.open(outputFile, "w")
     for path,content in pairs(contents)
     do
-        h.write(path .. " " .. content .. "\n")
+        h.write(path .. "\n" .. content .. "\n")
     end
     h.close()
 end
@@ -36,11 +36,11 @@ function FileComposer.decompress(archive, rewrite, verbose, folder)
     end
 
     while true do
-        local line = h.readLine()
-        if not line then break end
+        local file = h.readLine()
+        local content = h.readLine()
+        if not line or line == "" or not content or content == "" then break end
 
-        local pairs = Utils.split(line, " ")
-        local path = folder .. "/" .. pairs[1]
+        local path = folder .. "/" .. file
         if rewrite == false and fs.exists(path) then
             error("File " .. path .. " already exists")
         end
@@ -49,7 +49,7 @@ function FileComposer.decompress(archive, rewrite, verbose, folder)
         end
 
         local handle = fs.open(path, "w")
-        handle.write(base64.decode(pairs[2]))
+        handle.write(base64.decode(content))
         handle.close()
     end
     h.close()
