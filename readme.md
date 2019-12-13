@@ -58,6 +58,11 @@ Download latest installer with:
 wget https://raw.githubusercontent.com/mesour/packager-server/master/generated/packager-installer.lua
 ```
 
+For upgrade to the latest version use this command:
+```
+packager-installer self-upgrade
+```
+
 Replace `<REPOSITORY>` to your `user/repository` from you Github URL and run _(for update use same command.)_:
 
 ```
