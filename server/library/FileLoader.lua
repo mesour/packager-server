@@ -61,7 +61,6 @@ end
 
 function FileLoader:loadFile(name, directory, finalDirectory, finalName, extension)
   extension = extension or ".lua"
-  print(directory .. name .. extension)
   local h = fs.open(directory .. name .. extension, "r")
   if h == nil then
     error("Library " .. name .. " not found")

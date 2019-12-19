@@ -40,7 +40,7 @@ function PackagerServer:sendFiles(id, libraries)
   while true
   do
     if waiting then
-        print('done')
+        print('- sendFiles')
         break
     else
       self.rednetClient:broadcast(id, "send", libraries)
