@@ -35,9 +35,8 @@ function TurtleMover:goToVector(targetVector, side)
         elseif self:turnToNeededSide(currentVector, targetVector, side) then
 
         elseif currentVector.x == targetVector.x and currentVector.y == targetVector.y and currentVector.z == targetVector.z then
-            -- in finish
-            print("in finish")
             return true
+
         else
             self:forward()
         end
@@ -145,16 +144,16 @@ function TurtleMover:attackDown()
 end
 
 function TurtleMover:turnRight()
-    self.side = self:getRotatedFace(self.side, 1)
+    self.side = self:getRotatedSide(self.side, 1)
     return turtle.turnRight()
 end
 
 function TurtleMover:turnLeft()
-    self.side = self:getRotatedFace(self.side, -1)
+    self.side = self:getRotatedSide(self.side, -1)
     return turtle.turnLeft()
 end
 
-function TurtleMover:getRotatedFace(side, about)
+function TurtleMover:getRotatedSide(side, about)
     local currentNum = self.sideNums[side]
     return self.sides[self:correctSideNum(currentNum + about)]
 end

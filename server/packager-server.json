@@ -145,7 +145,7 @@
       ],
       "bin": ["run-turtle"],
       "startup": "run-turtle",
-      "mainConfig": "turtle-config"
+      "config": ["turtle-config"]
     },
     "reactorMonitor": {
       "library": [

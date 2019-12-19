@@ -1,6 +1,6 @@
 # How to use GPS
 
-How to use GPS in Computercraft
+How to use GPS in Minecraft with using Computercraft
 
 ## Usage
 

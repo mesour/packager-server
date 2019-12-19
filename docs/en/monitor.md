@@ -6,8 +6,7 @@ Input for monitor is via Wireless. It is used for many programs output.
 
 ## Requirements
 
-1. IndustrialCraft 2 (IC2)
-2. Computercraft (CC:Tweaked)
+1. Computercraft (CC:Tweaked)
 
 Tested on Minecraft 1.12.2
 

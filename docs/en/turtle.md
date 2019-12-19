@@ -28,7 +28,7 @@ Tested on Minecraft 1.12.2
   "start": "-36, 26, 5",
   "end": "-45, 18, 8",
   "storage": "-36, 21, 5",
-  "storageFace": "east"
+  "storageSide": "east"
 }
 ```
 

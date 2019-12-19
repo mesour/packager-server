@@ -3,7 +3,7 @@
 Automatic program for display detailed info about nuclear reactor or fluid nuclear reactor.
 
 - Clickable button ON / OFF is included on monitor (use by right clicking)
-- Supports normal and fluid reactor are supported
+- Supports normal and fluid reactor
 
 ![Fluid reactor monitor](../img/reactorMonitor_monitor.png)
 
