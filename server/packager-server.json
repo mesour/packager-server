@@ -13,7 +13,7 @@
       "library": [
         "managerPlugins/ReactorPlugin",
         "managerPlugins/EuStoragePlugin",
-        "managerPlugins/TrutlePlugin",
+        "managerPlugins/TurtlePlugin",
         "RednetClient",
         "Manager",
         "Utils"
