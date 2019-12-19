@@ -25,9 +25,11 @@ Tested on Minecraft 1.12.2
 ```
 {
   "name": "t1",
+  "rednet": "right",
   "start": "-36, 26, 5",
   "end": "-45, 18, 8",
   "storage": "-36, 21, 5",
+  "torchStorage": "-36, 19, 5",
   "storageSide": "east"
 }
 ```

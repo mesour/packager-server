@@ -13,6 +13,7 @@
       "library": [
         "managerPlugins/ReactorPlugin",
         "managerPlugins/EuStoragePlugin",
+        "managerPlugins/TrutlePlugin",
         "RednetClient",
         "Manager",
         "Utils"
@@ -141,6 +142,7 @@
       "library": [
         "turtle/Turtle",
         "FileLoader",
+        "RednetClient",
         "Utils"
       ],
       "bin": ["run-turtle"],
