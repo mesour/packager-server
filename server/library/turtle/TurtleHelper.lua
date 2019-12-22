@@ -53,10 +53,17 @@ function TurtleHelper.detectStartSide(startVector, endVector)
     return nil
 end
 
-function TurtleHelper.getSize(startStation, endStation)
+function TurtleHelper.getSize(startStation, endStation, side)
     local s = startStation
     local e = endStation
-    return TurtleHelper.getSizePart(s.x, e.x), TurtleHelper.getSizePart(s.y, e.y), TurtleHelper.getSizePart(s.z, e.z)
+    local xPart = TurtleHelper.getSizePart(s.x, e.x)
+    local yPart = TurtleHelper.getSizePart(s.y, e.y)
+    local zPart = TurtleHelper.getSizePart(s.z, e.z)
+
+    if side == "north" or side == "south" then
+        return yPart, xPart, zPart
+    end
+    return xPart, yPart, zPart
 end
 
 function TurtleHelper.getSizePart(s, e)

@@ -27,7 +27,8 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
     setmetatable(obj, self)
 
     local row = Turtle.initRow()
-    local rowLength, rowCount, floorCount = TurtleHelper.getSize(start, finish)
+    local startSide = TurtleHelper.detectStartSide(start, finish)
+    local rowLength, rowCount, floorCount = TurtleHelper.getSize(start, finish, startSide)
 
     obj.name = name
     obj.rednetClient = rednetClient
@@ -45,7 +46,7 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
     obj.mover = TurtleMover:create()
     obj.fuel = TurtleFuel:create()
     obj.inventory = TurtleInventory:create()
-    obj.startSide = TurtleHelper.detectStartSide(start, finish)
+    obj.startSide = startSide
     obj.startStation = start
     obj.endStation = finish
 
@@ -87,12 +88,18 @@ function Turtle:run()
             self:setState("full-inventory")
             if self.mover:goToVector(self.storageStation, self.storageSide) then
                 self.inventory:flush()
+                self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
+                self:decreaseRow()
+                self:setState("starting")
             end
 
         elseif self.fuel:needFuel() then
             self:setState("need-fuel")
             if self.mover:goToVector(self.storageStation, self.storageSide) then
                 self.fuel:refuel()
+                self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
+                self:decreaseRow()
+                self:setState("starting")
             end
 
         elseif not self.inventory:hasTorches() then
@@ -102,6 +109,9 @@ function Turtle:run()
                     TurtleLogger.error("Empty torches storage! Manual intervention is required.")
                     break
                 end
+                self.mover:goToVector(self.torchStorageStation, self.mover:getRotatedSide(self.storageSide, 2))
+                self:decreaseRow()
+                self:setState("starting")
             end
 
         elseif self:continuePlan() == false then
@@ -249,7 +259,7 @@ end
 
 function Turtle:needPlaceTorch()
     return self.floor == 0
-        and ((self.rowLength > 15 and self.position % 10 == 0) or math.ceil(self.rowLength / 2) == self.position)
+        and ((self.rowLength > 9 and self.position % 5 == 0) or math.ceil(self.rowLength / 2) == self.position)
         and (self.row % 5 == 0 or math.ceil(self.rowCount / 2) == self.row)
 end
 
@@ -334,6 +344,14 @@ end
 
 function Turtle:increaseRow(disableSaveSettings)
     self.row = self.row + 1
+    self:saveRow(disableSaveSettings)
+end
+
+function Turtle:decreaseRow(disableSaveSettings)
+    self.row = self.row - 1
+    if self.row < 0 then
+        self.row = 0
+    end
     self:saveRow(disableSaveSettings)
 end
 

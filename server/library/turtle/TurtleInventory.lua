@@ -21,8 +21,10 @@ end
 
 function TurtleInventory:flush()
     for i = 1, 16 do
-        turtle.select(i)
-        turtle.dropDown()
+        if i ~= 15 then
+            turtle.select(i)
+            turtle.dropDown()
+        end
     end
 end
 

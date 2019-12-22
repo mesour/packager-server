@@ -20,11 +20,11 @@ function GeneratorGridControl:create(name, monitorWidth, monitorHeight, generato
 end
 
 function GeneratorGridControl:run()
-  self.monitor:setTextScale(.5)
-
   while true
   do
     self.monitor:clear()
+
+    self.monitor:setTextScale(.5)
 
     -- FIELDSET
     local fieldset = MonitorFieldset:create(self.monitor)
@@ -62,13 +62,13 @@ function GeneratorGridControl:run()
 
       allCapacity = allCapacity + capacity
       allAmount = allAmount + amount
-      allOfferedEnergy = allOfferedEnergy + generator:getOfferedEnergy()
       maxOfferedEnergy = maxOfferedEnergy + fluid["energy"]
 
-      local active = allOfferedEnergy > 0.0
+      local active = amount > 5
 
-      if active and 5 < key then
+      if active then
         someActive = true
+        allOfferedEnergy = allOfferedEnergy + generator:getOfferedEnergy()
       end
 
       local chartColor = fluid["color"] or "5"
