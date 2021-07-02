@@ -340,6 +340,7 @@ function Turtle:toArray()
     out["fullInventory"] = self.inventory:hasFull()
     out["hasTorches"] = self.inventory:hasTorches()
     out["location"] = self.mover:getCurrentVector()
+    out["state"] = self.mover:getCurrentVector()
 
     return out
 end
