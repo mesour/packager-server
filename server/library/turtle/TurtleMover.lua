@@ -171,9 +171,14 @@ function TurtleMover:correctSideNum(num)
     return num
 end
 
-function TurtleMover:getLocation()
+function TurtleMover:getLocation(counter)
+    counter = counter or 0
     local x, y, z = gps.locate(5)
     if not x then
+        if counter < 5 then
+          sleep(5)
+          return TurtleMover:getLocation(counter + 1)
+        end
         TurtleLogger.error("Failed to get my location!")
         return false
     else
