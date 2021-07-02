@@ -27,6 +27,7 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
     setmetatable(obj, self)
 
     local row = Turtle.initRow()
+    local position = Turtle.initPosition()
     local startSide = TurtleHelper.detectStartSide(start, finish)
     local rowLength, rowCount, floorCount = TurtleHelper.getSize(start, finish, startSide)
 
@@ -40,10 +41,15 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
     obj.storageSide = storageSide
     obj.floor = Turtle.initFloor()
     obj.row = row
+    obj.position = position
 
     obj:initPosition()
 
-    obj.mover = TurtleMover:create()
+    obj.mover = TurtleMover:create(function ()
+      obj:pushState()
+    end)
+
+
     obj.fuel = TurtleFuel:create()
     obj.inventory = TurtleInventory:create()
     obj.startSide = startSide
@@ -89,7 +95,7 @@ function Turtle:run()
             if self.mover:goToVector(self.storageStation, self.storageSide) then
                 self.inventory:flush()
                 self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
-                self:decreaseRow()
+
                 self:setState("starting")
             end
 
@@ -101,7 +107,7 @@ function Turtle:run()
                   break
               end
               self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
-              self:decreaseRow()
+
               self:setState("starting")
             end
 
@@ -113,7 +119,7 @@ function Turtle:run()
                     break
                 end
                 self.mover:goToVector(self.torchStorageStation, self.mover:getRotatedSide(self.storageSide, 2))
-                self:decreaseRow()
+
                 self:setState("starting")
             end
 
@@ -218,7 +224,7 @@ end
 function Turtle:findTargetVector()
     if (self:isIncreasing() and self.position > self.rowLength) or (self:isIncreasing() == false and self.position <= -1) then
         self:increaseRow()
-        self:initPosition()
+        self:resetPosition()
     end
 
     local remainingFloors = self.floorCount + 1 - self.floor
@@ -286,6 +292,13 @@ function Turtle.saveSettings(disableSaveSettings)
     end
 end
 
+function Turtle:savePosition(disableSaveSettings)
+  if self.position % 10 == 0 then
+    settings.set("position", self.position)
+    Turtle.saveSettings(disableSaveSettings)
+  end
+end
+
 function Turtle.initRow()
     return settings.get("row", 0)
 end
@@ -326,6 +339,7 @@ function Turtle:toArray()
 
     out["fullInventory"] = self.inventory:hasFull()
     out["hasTorches"] = self.inventory:hasTorches()
+    out["location"] = self.mover:getCurrentVector()
 
     return out
 end
@@ -333,6 +347,7 @@ end
 function Turtle.resetSettings()
     settings.set("row", 0)
     settings.set("floor", 0)
+    settings.set("position", 0)
     Turtle.saveSettings()
     print("Reset was successful")
 end
@@ -363,20 +378,31 @@ function Turtle:resetRow(disableSaveSettings)
     self:saveRow(disableSaveSettings)
 end
 
-function Turtle:updatePosition()
+function Turtle:updatePosition(disableSaveSettings)
     if self:isIncreasing() then
         self.position = self.position + 1
     else
         self.position = self.position - 1
     end
+    self.mover:refreshCurrentVector()
+    self:savePosition(disableSaveSettings)
 end
 
 function Turtle:initPosition()
+    local position = settings.get("position", -10)
+    if position > -10 then
+        return position
+    end
+    self:resetPosition()
+end
+
+function Turtle:resetPosition()
     if self:isIncreasing() then
         self.position = 0
     else
         self.position = self.rowLength
     end
+    self:savePosition()
 end
 
 return Turtle

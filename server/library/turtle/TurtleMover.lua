@@ -4,13 +4,15 @@ dofile("library/turtle/TurtleLogger.lua")
 TurtleMover = {}
 TurtleMover.__index = TurtleMover
 
-function TurtleMover:create(startingSide)
+function TurtleMover:create(callback)
     local obj = {}
     setmetatable(obj, self)
 
-    obj.side = startingSide
+    obj.side = nil
     obj.sides = {"east","south","west","north"}
     obj.sideNums = {east=1, south=2, west=3, north=4}
+    obj.currentVector = {x=-1, y=-1, z=-1}
+    obj.callback = callback or function() end
     return obj
 end
 
@@ -18,7 +20,16 @@ function TurtleMover:setSide(side)
   self.side = side
 end
 
+function TurtleMover:getCurrentVector()
+  return self.currentVector
+end
+
+function TurtleMover:refreshCurrentVector()
+  self.currentVector = self:getLocation()
+end
+
 function TurtleMover:goToVector(targetVector, side)
+    callback = callback or function () end
     while true
     do
         local currentVector = self:getLocation()
@@ -26,6 +37,7 @@ function TurtleMover:goToVector(targetVector, side)
             return false
         end
 
+        self.currentVector = currentVector
         if currentVector.z < targetVector.z then
             self:up()
 
@@ -43,6 +55,7 @@ function TurtleMover:goToVector(targetVector, side)
 
         else
             self:forward()
+            self:callback()
         end
     end
 end
