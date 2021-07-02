@@ -29,13 +29,17 @@ function TurtleMover:goToVector(targetVector, side)
         if currentVector.z < targetVector.z then
             self:up()
 
-        elseif currentVector.z > targetVector.z then
+        elseif currentVector.z > targetVector.z and targetVector.z ~= (currentVector.z - 1) then
             self:down()
 
         elseif self:turnToNeededSide(currentVector, targetVector, side) then
 
-        elseif currentVector.x == targetVector.x and currentVector.y == targetVector.y and currentVector.z == targetVector.z then
+        elseif currentVector.x == targetVector.x and currentVector.y == targetVector.y then
+          if currentVector.z > targetVector.z then
+            self:down()
+          elseif currentVector.z == targetVector.z then
             return true
+          end
 
         else
             self:forward()

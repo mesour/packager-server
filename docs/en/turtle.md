@@ -1,6 +1,6 @@
 # Turtle
 
-Automatic turtle program for Computercraft 1.6+
+Automatic turtle program for Computercraft (CC:Tweaked)
 
 ## Requirements
 
@@ -21,6 +21,7 @@ Tested on Minecraft 1.12.2
 
 - All configurations are **required**.
 - Start position must always be at the bottom left of the cube.
+- Storage side is when standing in front of a chest
 
 ```
 {

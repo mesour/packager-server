@@ -28,12 +28,12 @@ function TurtleFuel:refuel()
         turtle.select(16)
         turtle.dropDown()
         if turtle.suck() == false then
-            -- no more fuel
-            break
+            return false
         end
         turtle.refuel()
         turtle.dropDown()
     end
+    return true
 end
 
 return TurtleFuel

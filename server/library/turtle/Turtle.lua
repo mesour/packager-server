@@ -96,17 +96,20 @@ function Turtle:run()
         elseif self.fuel:needFuel() then
             self:setState("need-fuel")
             if self.mover:goToVector(self.storageStation, self.storageSide) then
-                self.fuel:refuel()
-                self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
-                self:decreaseRow()
-                self:setState("starting")
+              if not self.fuel:refuel() then
+                  TurtleLogger.error("Empty fuel storage! Manual intervention is required. (or maybe bad storage side in settings?)")
+                  break
+              end
+              self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
+              self:decreaseRow()
+              self:setState("starting")
             end
 
         elseif not self.inventory:hasTorches() then
             self:setState("need-torches")
             if self.mover:goToVector(self.torchStorageStation, self.storageSide) then
                 if not self.inventory:takeTorches() then
-                    TurtleLogger.error("Empty torches storage! Manual intervention is required.")
+                    TurtleLogger.error("Empty torches storage! Manual intervention is required. (or maybe bad storage side in settings?)")
                     break
                 end
                 self.mover:goToVector(self.torchStorageStation, self.mover:getRotatedSide(self.storageSide, 2))

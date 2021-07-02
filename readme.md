@@ -44,7 +44,7 @@ new features and improve existing features.
 - `nuclearReactor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/reactor.md)
 - `reactorMonitor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/reactorMonitor.md)
 - `turbine` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turbine.md)
-- `turtle` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turtle.md)
+- `Automatic mining turtle` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turtle.md)
 
 ## Client installation
 
