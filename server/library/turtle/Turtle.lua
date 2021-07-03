@@ -28,7 +28,6 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
     setmetatable(obj, self)
 
     local row = Turtle.initRow()
-    local position = Turtle.initPosition()
     local startSide = TurtleHelper.detectStartSide(start, finish)
     local rowLength, rowCount, floorCount = TurtleHelper.getSize(start, finish, startSide)
 
@@ -42,7 +41,6 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
     obj.storageSide = storageSide
     obj.floor = Turtle.initFloor()
     obj.row = row
-    obj.position = position
 
     obj:initPosition()
 
