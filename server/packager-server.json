@@ -5,7 +5,7 @@
     "rendering/MonitorFieldset": ["rendering/MonitorLine"],
     "rendering/ChartItem": ["rendering/MonitorLine", "rendering/RenderHelper", "Utils"],
     "generators/FluidGenerator": ["FluidTank"],
-    "turtle/Turtle": ["turtle/TurtleFuel", "turtle/TurtleInventory", "turtle/TurtleMover", "turtle/TurtleHelper", "turtle/TurtleLogger"],
+    "turtle/Turtle": ["turtle/TurtleFuel", "turtle/TurtleInventory", "turtle/TurtleMover", "turtle/TurtleInspector", "turtle/TurtleHelper", "turtle/TurtleLogger"],
     "FluidTank": ["Fluid"]
   },
   "packages": {
