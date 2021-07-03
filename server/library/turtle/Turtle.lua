@@ -1,5 +1,6 @@
 dofile("library/turtle/TurtleInventory.lua")
 dofile("library/turtle/TurtleFuel.lua")
+dofile("library/turtle/TurtleInspector.lua")
 dofile("library/turtle/TurtleMover.lua")
 dofile("library/turtle/TurtleHelper.lua")
 dofile("library/turtle/TurtleLogger.lua")
@@ -52,6 +53,7 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
 
     obj.fuel = TurtleFuel:create()
     obj.inventory = TurtleInventory:create()
+    obj.inspector = TurtleInspector:create()
     obj.startSide = startSide
     obj.startStation = start
     obj.endStation = finish
@@ -178,10 +180,20 @@ function Turtle:continuePlan()
         local remainingFloors = self:getRemainingFloors()
         if remainingFloors >= 3 then
             turtle.digUp()
+            if self.inspector:isLavaAbove() then
+              self.mover:up()
+              self.mover:down()
+            end
         end
+
         self:forward()
+
         if self:getRemainingFloors() > 1 then
             turtle.digDown()
+            if self.inspector:isLavaUnder() then
+              self.mover:down()
+              self.mover:up()
+            end
         end
 
         if self:needPlaceTorch() then
@@ -340,7 +352,7 @@ function Turtle:toArray()
     out["fullInventory"] = self.inventory:hasFull()
     out["hasTorches"] = self.inventory:hasTorches()
     out["location"] = self.mover:getCurrentVector()
-    out["state"] = self.mover:getCurrentVector()
+    out["state"] = self.state
 
     return out
 end
