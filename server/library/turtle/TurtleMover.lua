@@ -4,35 +4,36 @@ dofile("library/turtle/TurtleLogger.lua")
 TurtleMover = {}
 TurtleMover.__index = TurtleMover
 
-function TurtleMover:create(callback)
+function TurtleMover:create(inspector, callback)
     local obj = {}
     setmetatable(obj, self)
 
     obj.side = nil
     obj.sides = {"east","south","west","north"}
+    obj.inspector = inspector
     obj.sideNums = {east=1, south=2, west=3, north=4}
     obj.currentVector = {x=-1, y=-1, z=-1}
     obj.callback = callback or function() end
     return obj
 end
 
-function TurtleMover:setSide(side)
-  self.side = side
+function TurtleMover:start()
+    self.side = self:detectSide()
 end
 
 function TurtleMover:getCurrentVector()
-  return self.currentVector
+    return self.currentVector
 end
 
 function TurtleMover:refreshCurrentVector()
-  self.currentVector = self:getLocation()
+    self.currentVector = TurtleMover.getLocation()
 end
 
 function TurtleMover:goToVector(targetVector, side)
     callback = callback or function () end
     while true
     do
-        local currentVector = self:getLocation()
+        local currentVector = TurtleMover.getLocation()
         if currentVector == false then
             return false
         end
@@ -47,11 +48,11 @@ function TurtleMover:goToVector(targetVector, side)
         elseif self:turnToNeededSide(currentVector, targetVector, side) then
 
         elseif currentVector.x == targetVector.x and currentVector.y == targetVector.y then
-          if currentVector.z > targetVector.z then
-            self:down()
-          elseif currentVector.z == targetVector.z then
-            return true
-          end
+            if currentVector.z > targetVector.z then
+                self:down()
+            elseif currentVector.z == targetVector.z then
+                return true
+            end
 
         else
             self:forward()
@@ -87,6 +88,25 @@ function TurtleMover:turnToNeededSide(currentVector, targetVector, side)
         return true
     end
     return false
+end
+
+function Turtle:detectSide()
+    local currentVector = TurtleMover.getLocation()
+    if currentVector == false then
+        return false
+    end
+
+    if self.inspector:isChest() then
+        turtle.turnLeft()
+    end
+
+    self:forward()
+
+    local frontVector = TurtleMover.getLocation()
+    if currentVector == false then
+        return false
+    end
+    return TurtleHelper.getNeededSide(currentVector, frontVector)
 end
 
 function TurtleMover:back()
@@ -147,10 +167,10 @@ function TurtleMover:attack()
 end
 
 function TurtleMover:attackUp()
-  while turtle.attackUp()
-  do
-    print ("Turtle attacked up.")
-  end
+    while turtle.attackUp()
+    do
+        print ("Turtle attacked up.")
+    end
 end
 
 function TurtleMover:attackDown()
@@ -184,13 +204,13 @@ function TurtleMover:correctSideNum(num)
     return num
 end
 
-function TurtleMover:getLocation(counter)
+function TurtleMover.getLocation(counter)
     counter = counter or 0
     local x, y, z = gps.locate(5)
     if not x then
         if counter < 5 then
-          sleep(5)
-          return TurtleMover:getLocation(counter + 1)
+            sleep(5)
+            return TurtleMover.getLocation(counter + 1)
         end
         TurtleLogger.error("Failed to get my location!")
         return false

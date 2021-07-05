@@ -19,6 +19,11 @@ function TurtleInventory:hasFull()
     return emptyCount <= self.minimumEmptySlots
 end
 
+function TurtleInventory:equip(position)
+    turtle.select(position)
+    return turtle.equipLeft()
+end
+
 function TurtleInventory:flush()
     for i = 1, 16 do
         if i ~= 15 then

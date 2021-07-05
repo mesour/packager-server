@@ -1,6 +1,10 @@
 # Turtle
 
-Automatic turtle program for Computercraft (CC:Tweaked)
+Automatic mining turtle program for Computercraft (CC:Tweaked)
+
+- Turtle automatically place torches, refuel, get new torches, killing mobs in front of turtle, removing lava and much more
+
+![Manager](../img/turtle.png)
 
 ## Requirements
 
@@ -35,26 +39,48 @@ Tested on Minecraft 1.12.2
 }
 ```
 
+## First start
+
+Before first start your turtle run:
+
+```
+startup setup
+```
+
+- It will find lava bucket at any position in turtle inventory and refuel
+- It will equip item from slot `16`
+
 ## Usage
+
+For start turtle simply restart it and startup will load automatically
+
+### Reset position
+
+If you start old turtle for new location you must reset it:
+```
+startup reset
+```
+
+- This will remove .settings file from turtle filesystem
+
+### Remote monitoring
+
+For remote monitoring can use [manager - turtle](https://github.com/mesour/packager-server/blob/master/docs/en/manager.md#plugin-turtle)
+
 
 ### Show current state
 
 For show current states run:
 ```
-run-turtle state
+startup state
 ```
+
 It will show something like:
+
 ```
 Row: 0
 Floor: 0
 Fuel: 25629/100000
 Need refuel: no
 Full inventory: no
-```
-
-### Reset position
-
-For reset position to start run:
-```
-run-turtle reset
 ```

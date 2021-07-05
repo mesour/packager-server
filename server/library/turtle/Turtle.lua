@@ -9,9 +9,14 @@ Turtle = {}
 Turtle.__index = Turtle
 
 function Turtle.init(name, start, finish, storage, torchStorage, storageSide, rednetClient, args)
-    if args[1] == nil then
+    if args[1] == nil or args[1] == "setup" then
         local turtleHelper = Turtle:create(name, start, finish, storage, torchStorage, storageSide, rednetClient)
-        turtleHelper:run()
+        if args[1] == "setup" then
+            turtleHelper:setup()
+        else
+            turtleHelper:run()
+        end
+
     elseif args[1] == "state" then
         Turtle.showState()
     elseif args[1] == "reset" then
@@ -41,11 +46,12 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
     obj.storageSide = storageSide
     obj.floor = Turtle.initFloor()
     obj.row = row
+    obj.position = 0
 
     obj:initPosition()
 
     obj.mover = TurtleMover:create(function ()
-      obj:pushState()
+        obj:pushState()
     end)
 
 
@@ -61,19 +67,21 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
     return obj
 end
 
-function Turtle:detectSide()
-    local currentVector = self.mover:getLocation()
-    if currentVector == false then
-        return false
+function Turtle:setup()
+    ok = true
+    if self.fuel:emptyFuel() then
+        print("Empty fuel! Trying find and use fuel...")
+        if self.fuel:findAndUseFuel() then
+            print("- Fuel found")
+        else
+            print("! NO fuel found")
+            ok = false
+        end
     end
 
-    self.mover:forward()
-
-    local frontVector = self.mover:getLocation()
-    if currentVector == false then
-        return false
+    if self.inventory:equip(16) then
+        print("Item at position 16 was equipped")
     end
-    return TurtleHelper.getNeededSide(currentVector, frontVector)
 end
 
 function Turtle:run()
@@ -82,13 +90,25 @@ function Turtle:run()
         return nil
     end
 
-    self.mover:setSide(self:detectSide())
+    self.mover:start()
 
     while true
     do
         if self.fuel:emptyFuel() then
             TurtleLogger.error("Empty fuel! Need manual refuel.")
             break
+
+        elseif self.fuel:needFuel() then
+            self:setState("need-fuel")
+            if self.mover:goToVector(self.storageStation, self.storageSide) then
+                if not self.fuel:refuel() then
+                    TurtleLogger.error("Empty fuel storage! Manual intervention is required. (or maybe bad storage side in settings?)")
+                    break
+                end
+                self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
+
+                self:setState("starting")
+            end
 
         elseif self.inventory:hasFull() then
             self:setState("full-inventory")
@@ -97,18 +117,6 @@ function Turtle:run()
                 self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
 
                 self:setState("starting")
-            end
-
-        elseif self.fuel:needFuel() then
-            self:setState("need-fuel")
-            if self.mover:goToVector(self.storageStation, self.storageSide) then
-              if not self.fuel:refuel() then
-                  TurtleLogger.error("Empty fuel storage! Manual intervention is required. (or maybe bad storage side in settings?)")
-                  break
-              end
-              self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
-
-              self:setState("starting")
             end
 
         elseif not self.inventory:hasTorches() then
@@ -133,7 +141,7 @@ function Turtle:run()
 end
 
 function Turtle:continuePlan()
-    local currentVector = self.mover:getLocation()
+    local currentVector = TurtleMover.getLocation()
     if currentVector == false then
         return false
     end
@@ -178,9 +186,9 @@ function Turtle:continuePlan()
         local remainingFloors = self:getRemainingFloors()
         if remainingFloors >= 3 then
             turtle.digUp()
-            if self.inspector:isLavaAbove() then
-              self.mover:up()
-              self.mover:down()
+            if self.inspector:isLava(TurtleInspector.UP) then
+                self.mover:up()
+                self.mover:down()
             end
         end
 
@@ -188,9 +196,9 @@ function Turtle:continuePlan()
 
         if self:getRemainingFloors() > 1 then
             turtle.digDown()
-            if self.inspector:isLavaUnder() then
-              self.mover:down()
-              self.mover:up()
+            if self.inspector:isLava(TurtleInspector.DOWN) then
+                self.mover:down()
+                self.mover:up()
             end
         end
 
@@ -201,6 +209,10 @@ function Turtle:continuePlan()
 end
 
 function Turtle:forward()
+    if self.inspector:isChest() then
+        TurtleLogger.error("Chest is in front of a turtle. Turtle waiting for manual destroy chest and restart turtle.")
+        error("Error: Chest is in front of a turtle.")
+    end
     if self.mover:forward() then
         self:updatePosition()
     end
@@ -222,7 +234,7 @@ function Turtle:getCurrentStartSide()
     end
 
     if self:isIncreasing() then
-      return self.startSide
+        return self.startSide
     end
     return self.mover:getRotatedSide(self.startSide, 2)
 end
@@ -232,7 +244,8 @@ function Turtle:getRemainingFloors()
 end
 
 function Turtle:findTargetVector()
-    if (self:isIncreasing() and self.position > self.rowLength) or (self:isIncreasing() == false and self.position <= -1) then
+    if (self:isIncreasing() and self.position > self.rowLength)
+            or (self:isIncreasing() == false and self.position <= -1) then
         self:increaseRow()
         self:resetPosition()
     end
@@ -278,8 +291,8 @@ end
 
 function Turtle:needPlaceTorch()
     return self.floor == 0
-        and ((self.rowLength > 9 and self.position % 5 == 0) or math.ceil(self.rowLength / 2) == self.position)
-        and (self.row % 5 == 0 or math.ceil(self.rowCount / 2) == self.row)
+            and ((self.rowLength > 9 and self.position % 5 == 0) or math.ceil(self.rowLength / 2) == self.position)
+            and (self.row % 5 == 0 or math.ceil(self.rowCount / 2) == self.row)
 end
 
 function Turtle:isIncreasing()
@@ -303,10 +316,10 @@ function Turtle.saveSettings(disableSaveSettings)
 end
 
 function Turtle:savePosition(disableSaveSettings)
-  if self.position % 10 == 0 then
-    settings.set("position", self.position)
-    Turtle.saveSettings(disableSaveSettings)
-  end
+    if self.position % 10 == 0 then
+        settings.set("position", self.position)
+        Turtle.saveSettings(disableSaveSettings)
+    end
 end
 
 function Turtle.initRow()
@@ -322,7 +335,7 @@ function Turtle.showState()
     print("Floor: " .. Turtle.initFloor())
 
     local fuel = TurtleFuel:create()
-    print("Fuel: " .. turtle.getFuelLevel() .. "/" .. turtle.getFuelLimit())
+    print("Fuel: " .. self.fuel:getFuelLevel() .. "/" .. self.fuel:getFuelLimit())
     if fuel:needFuel() then
         print("Need refuel: yes")
     else
@@ -343,8 +356,8 @@ function Turtle:toArray()
         floor = self.floor
     }
 
-    out["fuelLevel"] = turtle.getFuelLevel()
-    out["fuelLimit"] = turtle.getFuelLimit()
+    out["fuelLevel"] = self.fuel:getFuelLevel()
+    out["fuelLimit"] = self.fuel:getFuelLimit()
     out["needRefuel"] = self.fuel:needFuel()
 
     out["fullInventory"] = self.inventory:hasFull()

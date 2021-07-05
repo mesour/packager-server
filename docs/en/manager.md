@@ -10,7 +10,7 @@ Program for remote managing and display info.
 
 1. Computercraft (CC:Tweaked)
 
-Tested on Minecraft 1.12.2
+Tested on Minecraft 1.16.5
 
 ## Installation
 

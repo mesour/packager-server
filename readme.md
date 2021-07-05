@@ -3,9 +3,9 @@
 ## Requirements
 
 - `Computercraft (CC:Tweaked)`
-- `IndustrialCraft 2 (IC2)` or `Plethora` for some packages if you want it
+- (optional) `IndustrialCraft 2 (IC2)` or `Plethora` for some packages if you want it
 
-Tested on Minecraft 1.12.2
+Tested on Minecraft 1.16.5 and 1.12.2
 
 ## Features
 
