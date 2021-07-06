@@ -50,7 +50,7 @@ function TurtleMonitor:printToMonitor(data)
     local floorCount = math.ceil(data["floorCount"] / 3)
     local startSide = data["startSide"]
     local maxSlots = 16 - data["minEmptySlots"]
-    local fullSlots = maxSlots - data["emptySlots"]
+    local fullSlots = maxSlots - data["emptySlots"] + 1
 
     self.monitor:clear()
 
@@ -78,19 +78,56 @@ function TurtleMonitor:printToMonitor(data)
     color = RenderHelper.getColorByPercent(currentFuel / maxFuel * 100)
     self:insertChart(self.x + 2, self.y + 10, "Fuel", currentFuel, maxFuel, color)
 
-    self.monitor:writePosition("Location: z: " .. tostring(location["z"]), "0", "f", 4, self.y + 2)
-    self.monitor:writePosition("x: " .. tostring(location["x"]), "0", "f", 4, self.y + 3)
-    self.monitor:writePosition("y: " .. tostring(location["y"]), "0", "f", 4, self.y + 4)
+    self.monitor:writePosition("GPS: x:", "0", "f", 4, self.y + 2)
+    s = tostring(location["x"])
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 16) .. s, "0", "f", 11, self.y + 2)
+
+    self.monitor:writePosition("     y:", "0", "f", 4, self.y + 3)
+    s = tostring(location["y"])
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 16) .. s, "0", "f", 11, self.y + 3)
+
+    self.monitor:writePosition("     z:", "0", "f", 4, self.y + 4)
+    s = tostring(location["z"])
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 16) .. s, "0", "f", 11, self.y + 4)
 
     s = Utils.getReadableNumber(currentFuel) .. " / " .. Utils.getReadableNumber(maxFuel)
     self.monitor:writePosition("Fuel:", "0", "f", 4, 25)
-    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 15) .. s, "0", "f", 12, 25, 23)
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 15) .. s, "0", "f", 12, 25)
 
     s = Utils.getReadableNumber(fullSlots) .. " / " .. Utils.getReadableNumber(maxSlots)
     self.monitor:writePosition("Chest:", "0", "f", 4, 26)
-    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 15) .. s, "0", "f", 12, 26, 23)
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 15) .. s, "0", "f", 12, 26)
 
-    local counter = 4
+    s = row .. " / " .. rowCount
+    self.monitor:writePosition("Row:", "0", "f", 4, 28)
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 12) .. s, "0", "f", 15, 28)
+
+    s = math.min(floor, floorCount) .. " / " .. floorCount
+    self.monitor:writePosition("Floor:", "0", "f", 4, 29)
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 12) .. s, "0", "f", 15, 29)
+
+    s = tostring(position)
+    self.monitor:writePosition("Position:", "0", "f", 4, 30)
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 12) .. s, "0", "f", 15, 30)
+
+    self.monitor:writePosition("Start side:", "0", "f", 4, 31)
+    self.monitor:writePosition(RenderHelper.getCharacterTo(startSide, 12) .. startSide, "0", "f", 15, 31)
+
+    item = RenderHelper.getYesAndNo(hasTorches)
+    self.monitor:writePosition("Has torch:", "0", "f", 4, 33)
+    s = select(1, item)
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 13) .. s, "0", select(2, item), 14, 33)
+
+    item = RenderHelper.getYesAndNo(fullInventory)
+    self.monitor:writePosition("Full chest:", "0", "f", 4, 34)
+    s = select(1, item)
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 12) .. s, "0", select(2, item), 15, 34)
+
+    item = RenderHelper.getYesAndNo(needRefuel)
+    self.monitor:writePosition("Need fuel:", "0", "f", 4, 35)
+    s = select(1, item)
+    self.monitor:writePosition(RenderHelper.getCharacterTo(s, 13) .. s, "0", select(2, item), 14, 35)
+
     local floorColors = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "d"}
 
     for zPoint = floorCount, 1, -1 do
@@ -103,13 +140,23 @@ function TurtleMonitor:printToMonitor(data)
 
     for xPoint = 0, rowCount, 1 do
         for yPoint = 0, rowLength, 1 do
-            local color = floorColors[floor]
-            if row == xPoint and position == yPoint and state ~= "complete" then
-                color = "e" -- turtle color (red)
-            elseif xPoint < row or (xPoint == row and ((row % 2 == 0 and yPoint < position) or (row % 2 ~= 0 and yPoint > position))) then
-                color = floorColors[currentFloor]
+            local currentColor
+            if floor > floorCount then
+                currentColor = "f"
+            else
+                currentColor = floorColors[floor]
             end
-            self.monitor:writePosition("|", color, color, 36 + xPoint, 4 + yPoint)
+
+            if row == xPoint and position == yPoint and state ~= "complete" then
+                currentColor = "e" -- turtle color (red)
+            elseif xPoint < row or (xPoint == row and ((row % 2 == 0 and yPoint < position) or (row % 2 ~= 0 and yPoint > position))) then
+                if currentFloor > floorCount then
+                    currentColor = "f"
+                else
+                    currentColor = floorColors[currentFloor]
+                end
+            end
+            self.monitor:writePosition("|", currentColor, currentColor, 36 + xPoint, 4 + yPoint)
         end
     end
 
@@ -122,12 +169,12 @@ end
 
 function TurtleMonitor:getStatusColors(state)
     textColor = "f"
-    if state == "mining" or state ~= "starting" or state ~= "to-start" or state ~= "complete" then
+    if state == "mining" or state == "complete" or state ~= "starting" and state ~= "to-start" then
         textColor = "0"
     end
 
     backgroundColor = "e"
-    if state == "mining" then
+    if state == "mining" or state == "complete" then
         backgroundColor = "d"
     elseif state == "starting" then
         backgroundColor = "1"

@@ -12,16 +12,12 @@ function RenderHelper.printOnOff(monitor, value)
   monitor:write(input, color)
 end
 
-function RenderHelper.printYesAndNo(monitor, value)
+function RenderHelper.getYesAndNo(value)
   if value then
-    input = "YES"
-    color = "d"
+    return "YES", "d"
   else
-    input = "NO"
-    color = "e"
+    return "NO", "e"
   end
-
-  monitor:write(input, color)
 end
 
 function RenderHelper.getColorByPercent(percent)
