@@ -75,7 +75,7 @@ function TurtleMonitor:printToMonitor(data)
     local color = RenderHelper.getColorByPercentReversed(fullSlots / maxSlots * 100)
     self:insertChart(self.x + 2, self.y + 6, "Chest", fullSlots, maxSlots, color)
 
-    local color = RenderHelper.getColorByPercent(currentFuel / maxFuel * 100)
+    color = RenderHelper.getColorByPercent(currentFuel / maxFuel * 100)
     self:insertChart(self.x + 2, self.y + 10, "Fuel", currentFuel, maxFuel, color)
 
     self.monitor:writePosition("Location: z: " .. tostring(location["z"]), "0", "f", 4, self.y + 2)
