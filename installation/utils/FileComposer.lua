@@ -41,9 +41,14 @@ function FileComposer.decompress(archive, rewrite, verbose, folder)
         if not file or file == "" or not content or content == "" then break end
 
         local path = folder .. "/" .. file
-        if rewrite == false and fs.exists(path) then
-            error("File " .. path .. " already exists")
+        if fs.exists(path) then
+            if rewrite then
+                fs.delete(path)
+            else
+                error("File " .. path .. " already exists")
+            end
         end
+
         if verbose then
             write(".")
         end
