@@ -49,6 +49,38 @@ Available commands:
  - status <reactor>
 ```
 
+## Plugin `turtle`
+
+Next command can be used for show available reactor names:
+```
+manager turtle list
+```
+
+Example result:
+```
+Searching turtles...
+
+...............
+Found 1 turtles
+ - t1
+```
+
+### Setup turtle for new digging location
+
+Next command will provide you with setup turtle (start, end, storages location, etc.)
+
+Run following command and read instructions:
+```
+manager turtle setup t1
+```
+
+### Listening turtle for current state and position
+
+Next command can be used for show turtle information
+```
+manager turtle listen t1
+```
+
 ## Plugin `reactor`
 
 Next command can be used for show available reactor names:

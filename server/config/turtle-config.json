@@ -4,6 +4,7 @@
   "start": "-36, 26, 5",
   "end": "-45, 18, 8",
   "storage": "-36, 21, 5",
-  "torchStorage": "-36, 19, 5",
+  "stoneStorage": "-35, 21, 5",
+  "torchStorage": "-34, 19, 5",
   "storageSide": "east"
 }

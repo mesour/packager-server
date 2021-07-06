@@ -4,7 +4,7 @@ Automatic mining turtle program for Computercraft (CC:Tweaked)
 
 - Turtle automatically place torches, refuel, get new torches, killing mobs in front of turtle, removing lava and much more
 
-![Manager](../img/turtle.png)
+![Manager](../img/turtle-locations.png)
 
 ## Requirements
 

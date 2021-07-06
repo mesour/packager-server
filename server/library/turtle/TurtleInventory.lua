@@ -19,16 +19,37 @@ function TurtleInventory:hasFull()
     return emptyCount <= self.minimumEmptySlots
 end
 
-function TurtleInventory:equip(position)
+function TurtleInventory:equipLeft(position, tool)
     turtle.select(position)
+    item = turtle.getItemDetail()
+    if item == nil then
+        return false
+    elseif tool ~= item.name then
+        return false
+    end
     return turtle.equipLeft()
 end
 
-function TurtleInventory:flush()
+function TurtleInventory:flushWithIgnore(ignored)
     for i = 1, 16 do
         if i ~= 15 then
             turtle.select(i)
-            turtle.dropDown()
+            local detail = turtle.getItemDetail()
+            if detail ~= nil and detail.name ~= ignored then
+                turtle.dropDown()
+            end
+        end
+    end
+end
+
+function TurtleInventory:flushSpecific(specific)
+    for i = 1, 16 do
+        if i ~= 15 then
+            turtle.select(i)
+            local detail = turtle.getItemDetail()
+            if detail ~= nil and detail.name == specific then
+                turtle.dropDown()
+            end
         end
     end
 end

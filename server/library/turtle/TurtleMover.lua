@@ -1,5 +1,6 @@
 dofile("library/turtle/TurtleHelper.lua")
 dofile("library/turtle/TurtleLogger.lua")
+dofile("library/turtle/TurtleInspector.lua")
 
 TurtleMover = {}
 TurtleMover.__index = TurtleMover
@@ -90,7 +91,7 @@ function TurtleMover:turnToNeededSide(currentVector, targetVector, side)
     return false
 end
 
-function Turtle:detectSide()
+function TurtleMover:detectSide()
     local currentVector = TurtleMover.getLocation()
     if currentVector == false then
         return false
@@ -115,7 +116,7 @@ function TurtleMover:back()
 end
 
 function TurtleMover:up()
-    if turtle.detectUp() then
+    if self.inspector:detect(TurtleInspector.UP) then
         if turtle.digUp() == false then
             self:attackUp()
         end
@@ -130,7 +131,7 @@ function TurtleMover:up()
 end
 
 function TurtleMover:down()
-    if turtle.detectDown() then
+    if self.inspector:detect(TurtleInspector.DOWN) then
         if turtle.digDown() == false then
             self:attackDown()
         end
@@ -145,7 +146,7 @@ function TurtleMover:down()
 end
 
 function TurtleMover:forward()
-    if turtle.detect() then
+    if self.inspector:detect() then
         if turtle.dig() == false then
             self:attack()
         end

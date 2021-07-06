@@ -11,6 +11,15 @@ function TurtleInspector:create()
     return obj
 end
 
+function TurtleInspector:detect(side)
+    if side == TurtleInspector.UP then
+        return turtle.detectUp()
+    elseif side == TurtleInspector.DOWN then
+        return turtle.detectDown()
+    end
+    return turtle.detect()
+end
+
 function TurtleInspector:isChest(side)
     return isType(select(2, inspectSide(side)), {"minecraft:chest", "minecraft:trapped_chest", "minecraft:barrel", "minecraft:ender_chest"})
 end
@@ -21,9 +30,9 @@ end
 
 function inspectSide(side)
     if side == TurtleInspector.UP then
-      return turtle.inspectUp()
+        return turtle.inspectUp()
     elseif side == TurtleInspector.DOWN then
-      return turtle.inspectDown()
+        return turtle.inspectDown()
     end
     return turtle.inspect()
 end

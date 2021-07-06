@@ -16,7 +16,8 @@ Tested on Minecraft 1.16.5 and 1.12.2
 - After download you only configure it and hold `ctrl + R`. It is everything :D
 - This repository contains server with more packages for monitor and control IndustrialCraft machines _(for now)_
 
-Example monitor (for fluid reactor):
+Example monitor (for mining turtle fluid reactor):
+![Mining turtle example](docs/img/turtle-locations.png)
 ![Reactor monitor example](docs/img/reactorMonitor_monitor.png)
 
 ## Contributing

@@ -8,9 +8,9 @@ dofile("library/turtle/TurtleLogger.lua")
 Turtle = {}
 Turtle.__index = Turtle
 
-function Turtle.init(name, start, finish, storage, torchStorage, storageSide, rednetClient, args)
+function Turtle.init(name, start, finish, storage, torchStorage, stoneStorage, storageSide, rednetClient, args)
     if args[1] == nil or args[1] == "setup" then
-        local turtleHelper = Turtle:create(name, start, finish, storage, torchStorage, storageSide, rednetClient)
+        local turtleHelper = Turtle:create(name, start, finish, storage, torchStorage, stoneStorage, storageSide, rednetClient)
         if args[1] == "setup" then
             turtleHelper:setup()
         else
@@ -28,7 +28,7 @@ function Turtle.init(name, start, finish, storage, torchStorage, storageSide, re
     rednetClient:close()
 end
 
-function Turtle:create(name, start, finish, storage, torchStorage, storageSide, rednetClient)
+function Turtle:create(name, start, finish, storage, torchStorage, stoneStorage, storageSide, rednetClient)
     local obj = {}
     setmetatable(obj, self)
 
@@ -43,6 +43,7 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
     obj.floorCount = floorCount
     obj.storageStation = storage
     obj.torchStorageStation = torchStorage
+    obj.stoneStorageStation = stoneStorage
     obj.storageSide = storageSide
     obj.floor = Turtle.initFloor()
     obj.row = row
@@ -50,14 +51,15 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
 
     obj:initPosition()
 
-    obj.mover = TurtleMover:create(function ()
+    inspector = TurtleInspector:create()
+    obj.inspector = inspector
+
+    obj.mover = TurtleMover:create(inspector, function ()
         obj:pushState()
     end)
 
-
     obj.fuel = TurtleFuel:create()
     obj.inventory = TurtleInventory:create()
-    obj.inspector = TurtleInspector:create()
     obj.startSide = startSide
     obj.startStation = start
     obj.endStation = finish
@@ -68,7 +70,7 @@ function Turtle:create(name, start, finish, storage, torchStorage, storageSide, 
 end
 
 function Turtle:setup()
-    ok = true
+    local ok = true
     if self.fuel:emptyFuel() then
         print("Empty fuel! Trying find and use fuel...")
         if self.fuel:findAndUseFuel() then
@@ -77,10 +79,47 @@ function Turtle:setup()
             print("! NO fuel found")
             ok = false
         end
+    else
+        print("- Fuel OK")
     end
 
-    if self.inventory:equip(16) then
-        print("Item at position 16 was equipped")
+    if self.inventory:equipLeft(16, "minecraft:diamond_pickaxe") then
+        print("- Pickaxe at position 16 was equipped to left side")
+    end
+
+    print("Waiting for receiving setup file from manager")
+    while true
+    do
+        self.rednetClient:broadcast(self.name, "setup-file", "1")
+        id, fileContent = self.rednetClient:receive("manager", "setup-file", 2)
+        if fileContent ~= nil then
+            fileContent = textutils.unserialize(fileContent)
+
+            print()
+            print("Received configuration option")
+
+            local content = "{\n"
+            content = content .. "\"name\": \"" .. fileContent.name .. "\",\n"
+            content = content .. "\"rednet\": \"" .. fileContent.rednet .. "\",\n"
+            content = content .. "\"start\": \"" .. fileContent.start.x .. ", " .. fileContent.start.y .. ", " .. fileContent.start.z .. "\",\n"
+            content = content .. "\"end\": \"" .. fileContent.finish.x .. ", " .. fileContent.finish.y .. ", " .. fileContent.finish.z .. "\",\n"
+            content = content .. "\"storage\": \"" .. fileContent.storage.x .. ", " .. fileContent.storage.y .. ", " .. fileContent.storage.z .. "\",\n"
+            content = content .. "\"stoneStorage\": \"" .. fileContent.stone.x .. ", " .. fileContent.stone.y .. ", " .. fileContent.stone.z .. "\",\n"
+            content = content .. "\"torchStorage\": \"" .. fileContent.torch.x .. ", " .. fileContent.torch.y .. ", " .. fileContent.torch.z .. "\",\n"
+            content = content .. "\"storageSide\": \"" .. fileContent.storageSide .. "\"\n"
+            content = content .. "}"
+
+            print(content)
+
+            local configFile = io.open("config.json", "w")
+            configFile.write(configFile, content)
+            configFile.close(configFile)
+
+            print("New config file was successfully saved")
+
+            break
+        end
+        term.write(".")
     end
 end
 
@@ -105,7 +144,6 @@ function Turtle:run()
                     TurtleLogger.error("Empty fuel storage! Manual intervention is required. (or maybe bad storage side in settings?)")
                     break
                 end
-                self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
 
                 self:setState("starting")
             end
@@ -113,8 +151,10 @@ function Turtle:run()
         elseif self.inventory:hasFull() then
             self:setState("full-inventory")
             if self.mover:goToVector(self.storageStation, self.storageSide) then
-                self.inventory:flush()
-                self.mover:goToVector(self.storageStation, self.mover:getRotatedSide(self.storageSide, 2))
+                self.inventory:flushWithIgnore("minecraft:cobblestone")
+                if self.mover:goToVector(self.stoneStorageStation, self.storageSide) then
+                    self.inventory:flushSpecific("minecraft:cobblestone")
+                end
 
                 self:setState("starting")
             end
@@ -126,7 +166,6 @@ function Turtle:run()
                     TurtleLogger.error("Empty torches storage! Manual intervention is required. (or maybe bad storage side in settings?)")
                     break
                 end
-                self.mover:goToVector(self.torchStorageStation, self.mover:getRotatedSide(self.storageSide, 2))
 
                 self:setState("starting")
             end
@@ -173,6 +212,7 @@ function Turtle:continuePlan()
 
     elseif currentVector.x == targetVector.x and currentVector.y == targetVector.y and currentVector.z == targetVector.z then
         if self.startStation.x == targetVector.x and self.startStation.y == targetVector.y and self.startStation.z == targetVector.z then
+            Turtle.resetSettings()
             self:setState("complete")
             print("COMPLETE")
             return false
@@ -185,7 +225,7 @@ function Turtle:continuePlan()
 
         local remainingFloors = self:getRemainingFloors()
         if remainingFloors >= 3 then
-            turtle.digUp()
+            self:digUp()
             if self.inspector:isLava(TurtleInspector.UP) then
                 self.mover:up()
                 self.mover:down()
@@ -195,7 +235,7 @@ function Turtle:continuePlan()
         self:forward()
 
         if self:getRemainingFloors() > 1 then
-            turtle.digDown()
+            self:digDown()
             if self.inspector:isLava(TurtleInspector.DOWN) then
                 self.mover:down()
                 self.mover:up()
@@ -205,6 +245,18 @@ function Turtle:continuePlan()
         if self:needPlaceTorch() then
             self.inventory:placeTorch()
         end
+    end
+end
+
+function Turtle:digUp()
+    if self.inspector:detect(TurtleInspector.UP) then
+        turtle.digUp()
+    end
+end
+
+function Turtle:digDown()
+    if self.inspector:detect(TurtleInspector.DOWN) then
+        turtle.digDown()
     end
 end
 
