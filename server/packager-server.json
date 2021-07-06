@@ -167,6 +167,21 @@
       "bin": ["run-command-listener"],
       "startup": "run-reactor-monitor",
       "config": ["reactor-monitor-config"]
+    },
+    "turtleMonitor": {
+      "library": [
+        "rendering/ChartItem",
+        "rendering/MonitorButton",
+        "rendering/MonitorFieldset",
+        "rendering/RenderHelper",
+        "RemoteMonitor",
+        "RednetClient",
+        "ReactorMonitor",
+        "FileLoader",
+        "Utils"
+      ],
+      "startup": "run-turtle-monitor",
+      "config": ["turtle-monitor-config"]
     }
   }
 }

@@ -212,16 +212,18 @@ function Turtle:continuePlan()
 
     elseif currentVector.x == targetVector.x and currentVector.y == targetVector.y and currentVector.z == targetVector.z then
         if self.startStation.x == targetVector.x and self.startStation.y == targetVector.y and self.startStation.z == targetVector.z then
-            Turtle.resetSettings()
             self:setState("complete")
             print("COMPLETE")
+            self:pushState()
             return false
         else
             self.position = 1
         end
 
     else
-        self:setState("mining")
+        if self.state ~= "complete" then
+            self:setState("mining")
+        end
 
         local remainingFloors = self:getRemainingFloors()
         if remainingFloors >= 3 then
@@ -276,7 +278,7 @@ function Turtle:setState(state)
 end
 
 function Turtle:pushState()
-    self.rednetClient:broadcast(self.name, "status", textutils.serialize(self:toArray()))
+    self.rednetClient:broadcast(self.name, "status", textutils.serialise(self:toArray()))
     self.rednetClient:broadcast("ping", "turtle", self.name)
 end
 
@@ -310,6 +312,7 @@ function Turtle:findTargetVector()
     end
 
     if self.floor >= self.floorCount + 1 then
+        self:setState("complete")
         return self.startStation
     end
 
@@ -405,7 +408,13 @@ function Turtle:toArray()
     local out = {
         position = self.position,
         row = self.row,
-        floor = self.floor
+        floor = self.floor,
+        rowLength = self.rowLength,
+        rowCount = self.rowCount,
+        floorCount = self.floorCount,
+        startSide = self.startSide,
+        emptySlots = self.inventory:getEmptySlots(),
+        minEmptySlots = self.inventory:getMinimumEmptySlots()
     }
 
     out["fuelLevel"] = self.fuel:getFuelLevel()

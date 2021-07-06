@@ -7,7 +7,7 @@ function TurtlePlugin:create(rednetClient)
     local obj = {}
     setmetatable(obj, self)
     obj.rednetClient = rednetClient
-    obj.availableCommands = {"list", "listen <turtle>"}
+    obj.availableCommands = {"list", "setup <turtle>", "listen <turtle>"}
     return obj
 end
 

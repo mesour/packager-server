@@ -10,13 +10,22 @@ function TurtleInventory:create()
 end
 
 function TurtleInventory:hasFull()
+    return self:getEmptySlots() <= self.minimumEmptySlots
+end
+
+function TurtleInventory:getEmptySlots()
     local emptyCount = 0
     for i = 1, 16 do
         if turtle.getItemCount(i) == 0 then
             emptyCount = emptyCount + 1
         end
     end
-    return emptyCount <= self.minimumEmptySlots
+    return emptyCount
+end
+
+
+function TurtleInventory:getMinimumEmptySlots()
+    return self.minimumEmptySlots
 end
 
 function TurtleInventory:equipLeft(position, tool)
