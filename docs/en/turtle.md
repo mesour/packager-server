@@ -8,11 +8,11 @@ Automatic mining turtle program for Computercraft (CC:Tweaked)
 
 ## Requirements
 
-1. IndustrialCraft 2 (IC2)
-2. Computercraft (CC:Tweaked)
-3. Need created [GPS Cluster](https://github.com/mesour/packager-server/blob/master/docs/en/gps.md) in game
+1. Computercraft (CC:Tweaked)
+2. Need created [GPS Cluster](https://github.com/mesour/packager-server/blob/master/docs/en/gps.md) in game
+3. Need created [packager server](https://github.com/mesour/packager-server#server-installation) in game in game
 
-Tested on Minecraft 1.12.2
+Tested on Minecraft 1.16.5
 
 ## Installation
 

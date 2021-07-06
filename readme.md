@@ -35,17 +35,26 @@ new features and improve existing features.
 
 ## Usable packages
 
+### Turtles (only CC:tweaked mod needed)
+
+- Mining `turtle` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turtle.md)
+- Remote `turtleMonitor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turtleMonitor.md)
+
+### Other packages
+
+- `manager` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/manager.md)
+- `monitor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/monitor.md)
+
+### Packages for IndustrialCraft2
+
 - `electroMeter` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/energyMeter.md)
 - `energyStorage`
 - `energyStorageGrid` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/energyStorageGrid.md)
 - `fluidTank` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/fluidTank.md)
 - `generatorGrid` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/generatorGrid.md)
-- `manager` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/manager.md)
-- `monitor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/monitor.md)
 - `nuclearReactor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/reactor.md)
 - `reactorMonitor` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/reactorMonitor.md)
 - `turbine` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turbine.md)
-- `Automatic mining turtle` - [usage](https://github.com/mesour/packager-server/blob/master/docs/en/turtle.md)
 
 ## Client installation
 
@@ -91,19 +100,21 @@ Download latest installer with:
 wget https://raw.githubusercontent.com/mesour/packager-server/master/generated/packager-installer.lua
 ```
 
-For upgrade to the latest version use this command:
+And update libraries from `mesour/packager-server` repository:
+
+```
+packager-installer mesour/packager-server
+```
+
+For upgrade to the latest version of packager-server use this command:
 ```
 packager-installer self-upgrade
 ```
 
 Replace `<REPOSITORY>` to your `user/repository` from you Github URL and run _(for update use same command.)_:
 
+This can be used for your own repository if contains required files like this repository
+
 ```
 packager-installer <REPOSITORY>
-```
-
-Example with `mesour/packager-server` repository:
-
-```
-packager-installer mesour/packager-server
 ```
