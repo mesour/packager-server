@@ -111,7 +111,7 @@ function TurtlePlugin:setup(turtleName)
     TurtlePlugin.printLocation(result['stone'])
 
     print("Storage side")
-    result['storageSide'] = Utils.trim(io.read())
+    result['storageSide'] = TurtlePlugin.getStorageSize()
     print("Storage side is: " .. result['storageSide'])
 
     self.rednetClient:broadcast("manager", "setup-file", result)
@@ -119,6 +119,15 @@ function TurtlePlugin:setup(turtleName)
     print("OK : Config file has been written to turtle")
 
     return true
+end
+
+function TurtlePlugin.getStorageSize()
+    local storageSide = Utils.trim(io.read())
+    if storageSide ~= "west" and storageSide ~= "east" and storageSide ~= "north" and storageSide ~= "south" then
+        print("Side " .. storageSide .. " is not valid. Enter valid side (west|north|east|south).")
+        return TurtlePlugin.getStorageSize()
+    end
+    return storageSide
 end
 
 function TurtlePlugin.printLocation(vector)

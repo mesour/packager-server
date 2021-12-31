@@ -156,6 +156,12 @@ function Turtle:run()
                     self.inventory:flushSpecific("minecraft:cobblestone", "minecraft:cobbled_deepslate", "minecraft:tuff")
                 end
 
+                if self.inventory:hasFull() then
+                    self:setState("full-storages")
+                    TurtleLogger.error("Full storages can not empty turtle inventory! Manual intervention is required.")
+                    break
+                end
+
                 self:setState("starting")
             end
 
@@ -413,8 +419,7 @@ function Turtle:toArray()
         rowCount = self.rowCount,
         floorCount = self.floorCount,
         startSide = self.startSide,
-        emptySlots = self.inventory:getEmptySlots(),
-        minEmptySlots = self.inventory:getMinimumEmptySlots()
+        emptySlots = self.inventory:getEmptySlots()
     }
 
     out["fuelLevel"] = self.fuel:getFuelLevel()
