@@ -39,24 +39,24 @@ function TurtleInventory:equipLeft(position, tool)
     return turtle.equipLeft()
 end
 
-function TurtleInventory:flushWithIgnore(ignored)
+function TurtleInventory:flushWithIgnore(ignored, ignored1, ignored2)
     for i = 1, 16 do
         if i ~= 15 then
             turtle.select(i)
             local detail = turtle.getItemDetail()
-            if detail ~= nil and detail.name ~= ignored then
+            if detail ~= nil and detail.name ~= ignored and detail.name ~= ignored1 and detail.name ~= ignored2 then
                 turtle.dropDown()
             end
         end
     end
 end
 
-function TurtleInventory:flushSpecific(specific)
+function TurtleInventory:flushSpecific(specific, specific1, specific2)
     for i = 1, 16 do
         if i ~= 15 then
             turtle.select(i)
             local detail = turtle.getItemDetail()
-            if detail ~= nil and detail.name == specific then
+            if detail ~= nil and (detail.name == specific or detail.name == specific1 or detail.name == specific2) then
                 turtle.dropDown()
             end
         end

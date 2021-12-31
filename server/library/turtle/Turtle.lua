@@ -151,9 +151,9 @@ function Turtle:run()
         elseif self.inventory:hasFull() then
             self:setState("full-inventory")
             if self.mover:goToVector(self.storageStation, self.storageSide) then
-                self.inventory:flushWithIgnore("minecraft:cobblestone")
+                self.inventory:flushWithIgnore("minecraft:cobblestone", "minecraft:cobbled_deepslate", "minecraft:tuff")
                 if self.mover:goToVector(self.stoneStorageStation, self.storageSide) then
-                    self.inventory:flushSpecific("minecraft:cobblestone")
+                    self.inventory:flushSpecific("minecraft:cobblestone", "minecraft:cobbled_deepslate", "minecraft:tuff")
                 end
 
                 self:setState("starting")
